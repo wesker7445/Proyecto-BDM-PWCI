@@ -1,0 +1,199 @@
+body {
+    background-color: rgb(44, 44, 44);
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* header, contenido flexible, footer */
+}
+
+h1 {
+    float: top;
+    color: rgb(255, 255, 255);
+    background-color: #343434;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+    width: auto;
+    top:auto;
+    margin: 0;
+    padding: 10px;
+}
+
+svg{
+  transition: transform 0.5s ease-in-out;
+}
+
+svg:hover{
+  transform: rotate(360deg);
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(255, 255, 255);
+    padding: 8px;
+}
+
+nav{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav ul{
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  align-items: center;
+  background-color: rgb(65, 65, 65);
+}
+
+nav ul li{
+  flex-grow: 1;
+  text-align: center;
+  position: relative;
+}
+
+nav ul li a{
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: rgb(235, 235, 235);
+  background-color: transparent;
+  font-weight: bold;
+  transition: transform 0.5s ease-in-out;
+}
+
+li a:hover {
+  background-color: rgba(21, 238, 166, 0.486);
+}
+
+nav ul li ul{
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  min-width: 180px;
+}
+
+nav ul li ul li{
+  width: 100%;
+}
+
+nav ul li:hover ul{
+  display: block;
+}
+
+nav ul li.container{
+  flex-grow: 0;
+  margin-left: 0;
+}
+
+.container form{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  border: transparent;
+}
+
+.container input[type="text"]{
+  border: none;
+  outline: none;
+  background-color: #555555;
+  color: white;
+  border-radius: 15px;
+  padding: 5px;
+  margin: 10px;
+}
+
+.container input::placeholder{
+  color: rgb(216, 216, 216);
+  font-weight: bold;
+}
+
+.container button{
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.container svg{
+  transition: transform 0.5s ease-in-out;
+}
+
+.container svg:hover{
+  transform: scale(1.2);
+}
+
+main{
+    flex: 1;
+    padding: 20px;
+}
+
+footer{
+  margin: 0;
+  padding: 15px;
+  overflow: hidden;
+  background-color: rgb(34, 34, 34);
+  text-align: center;
+  }
+
+  .Resaltado{
+    color:rgb(216, 216, 216);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+  }
+
+  /*Crear Cuenta*/
+main{
+  flex: 1;
+  display: flex;
+  justify-content: center;   /* Centrado horizontal */
+  align-items: center;       /* Centrado vertical */
+  min-height: calc(100vh - 120px); /* resto de alto (header+nav+footer aprox.) */
+
+}
+.Formulario{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #1a1a1a;/*#1a1a1a*/
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 100%;
+}
+.Formulario input, .Formulario select, .Formulario button{
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+}
+
+.Formulario input, .Formulario select{
+  background-color: #474747;/*#1a1a1a*/
+  color: white;
+}
+
+.Formulario button{
+  background-color: #6cd085;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+}
+
+.Formulario button:hover {
+  background-color: #55a86e;
+}
+
+.Formulario label{
+  color:#ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
