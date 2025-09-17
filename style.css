@@ -6,33 +6,66 @@ body {
     grid-template-rows: auto 1fr auto; /* header, contenido flexible, footer */
 }
 
-h1 {
-    float: top;
-    color: rgb(255, 255, 255);
-    background-color: #343434;
-    text-align: left;
-    font-family: Arial, Helvetica, sans-serif;
-    width: auto;
-    top:auto;
-    margin: 0;
-    padding: 10px;
+
+header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #575757;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-svg{
+header h1 {
+    display: flex;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    gap: 8px;
+    font-size: 20px;
+    margin: 0;
+}
+
+header h3 {
+  color: #6cd085;
+  margin: 0;
+}
+
+header svg{
   transition: transform 0.5s ease-in-out;
 }
 
-svg:hover{
+header svg:hover{
   transform: rotate(360deg);
 }
 
-a {
+header .user{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header .user h3{
+  color: #6cd085;
+  margin: 0;
+  font-size: 16px;
+  background-color: #747474;
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+header .user img{
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+nav a {
     display: block;
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(255, 255, 255);
     padding: 8px;
 }
+
 
 nav{
   position: sticky;
@@ -153,21 +186,21 @@ footer{
 main{
   flex: 1;
   display: flex;
-  justify-content: center;   /* Centrado horizontal */
-  align-items: center;       /* Centrado vertical */
-  min-height: calc(100vh - 120px); /* resto de alto (header+nav+footer aprox.) */
-
+  justify-content: center;  
+  align-items: center;    
+  min-height: calc(100vh - 120px); 
 }
-.Formulario{
+.Formulario {
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
   gap: 10px;
-  background-color: #1a1a1a;/*#1a1a1a*/
+  background-color: #1a1a1a;
   padding: 20px;
   border-radius: 10px;
   max-width: 400px;
   width: 100%;
 }
+
 .Formulario input, .Formulario select, .Formulario button{
   padding: 8px;
   border: none;
@@ -175,7 +208,7 @@ main{
 }
 
 .Formulario input, .Formulario select{
-  background-color: #474747;/*#1a1a1a*/
+  background-color: #474747;
   color: white;
 }
 
@@ -184,7 +217,6 @@ main{
   color: #000;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
 
 }
 
@@ -196,4 +228,36 @@ main{
   color:#ffffff;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
+}
+
+.Formulario h2{
+  text-align: center;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;  
+}
+
+/*Estilo de la seleccion de archivos*/
+input[type="file"]{
+  color: white;
+  font-weight: bold;
+  background-color: #333;
+  border-radius: 8px;
+  border: none;
+
+}
+
+input[type="file"]::file-selector-button {
+  background-color: #6cd085;
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 25px;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #55a86e;
 }
