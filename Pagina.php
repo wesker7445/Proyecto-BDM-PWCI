@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina Principal</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
 
 </head>
@@ -40,6 +43,48 @@
         </li>
     </ul>
 </nav>
+
+<main class="publicacion">
+    <article>
+        <h1>Los 5 Momentos Inolvidables del Mundial de 2014</h1>
+        <div class="info"> 
+            <span>Publicado por: Juan</span> <br>
+            <span>Fecha: 17 de septiembre de 2025</span>
+        </div>
+
+        <p class="introduccion">
+      El Mundial de Brasil 2014 nos dejó jugadas para la historia y emociones a flor de piel. Acompáñanos a revivir los cinco momentos que definieron este torneo.
+    </p>
+
+    <div class="cuerpo-articulo">
+      <p>
+        El Mineirazo fue un momento que silenció a todo un país. La anfitriona Brasil cayó estrepitosamente ante una Alemania que se coronaría campeona...
+      </p>
+
+      <p>
+        Corría el minuto 113 de una tensa final cuando Mario Götze controló con el pecho un pase de Schürrle y, sin dejarla caer, remató para darle la copa a Alemania...
+      </p>
+      
+      </div>
+
+    <div class="conclusion">
+      <p>
+        En resumen, el Mundial de 2014 fue un torneo lleno de sorpresas y drama. Para ti, ¿cuál fue el momento más memorable? ¡Déjanos tu opinión en los comentarios!
+      </p>
+    </div>
+
+    <img src="https://imgs.search.brave.com/Vmog522NsuqwlLRfDd-RE_Bu-65KsU9yqCkmY7F_KiY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pY2hl/Zi5iYmNpLmNvLnVr/L2FjZS93cy82NDAv/YW16L3dvcmxkc2Vy/dmljZS9saXZlL2Fz/c2V0cy9pbWFnZXMv/MjAxNC8wNy8xNC8x/NDA3MTQwMDQzMTRf/bWFyaW9fZ29ldHpl/X2FuZHJlX3NjaHVl/cnJsZV9hbmRfamVy/b21lX2JvYXRlbmdf/XzYyNHgzNTFfYWZw/LmpwZy53ZWJw" alt="Jugadores alemanes celebrando">
+
+    <form action="">
+    <input type="text" name="Comentario" placeholder="Pienso en...">
+    <button> Enviar </button>
+    
+    </article>
+
+
+    </form>
+
+</main>
 
 
 <footer>

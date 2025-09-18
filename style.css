@@ -3,7 +3,8 @@ body {
     margin: 0;
     min-height: 100vh;
     display: grid;
-    grid-template-rows: auto 1fr auto; /* header, contenido flexible, footer */
+    grid-template-rows: auto 1fr auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 
@@ -13,7 +14,7 @@ header{
   align-items: center;
   padding: 15px 20px;
   background-color: #575757;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 header h1 {
@@ -23,6 +24,7 @@ header h1 {
     gap: 8px;
     font-size: 20px;
     margin: 0;
+    font-weight: bold;
 }
 
 header h3 {
@@ -61,7 +63,7 @@ header .user img{
 nav a {
     display: block;
     text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     color: rgb(255, 255, 255);
     padding: 8px;
 }
@@ -125,6 +127,107 @@ nav ul li.container{
   margin-left: 0;
 }
 
+/* Publicacion */
+
+/*-------------------------------------*/
+.publicacion{
+  background-color: #333;
+  max-width: 800px;
+  margin: 40px auto;
+  border-radius: 15px;
+  padding: 40px 50px;
+  color: #e0e0e0;
+  line-height: 1.7;
+}
+
+.publicacion h1{
+  text-align: center;
+  font-weight: bold;
+  font-size: 2.5em; 
+  margin-bottom: 20px; 
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.publicacion .info {
+  text-align: center;
+  color: #aaa; 
+  font-style: italic;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #555; 
+  padding-bottom: 20px;
+}
+
+.publicacion p {
+  font-size: 18px;
+  margin-bottom: 1.2em; 
+}
+
+.publicacion img {
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%; 
+  height: auto;
+  border-radius: 10px;
+  margin-top: 30px; 
+  align-items: center;
+}
+
+.publicacion form{
+  display: block;
+  margin-left: auto;
+  margin: 40px auto;
+  margin-right: auto;
+  max-width: 1000px;
+  height: auto;
+  margin-top: 30px;
+  align-items: center;  
+}
+
+.publicacion input[type="text"]{
+  border: none;
+  outline: none;
+  background-color: #555555;
+  color: white;
+  border-radius: 15px;
+  padding: 10px 20px;
+  margin: 10px;
+  width: 80%;
+  font-weight: bold;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.publicacion input::placeholder{
+  color: rgb(216, 216, 216);
+  font-weight: bold;
+}
+
+
+.publicacion button{
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3 ease;
+
+
+  background-color: #555555;
+  color: #ffffff;
+  border-radius: 15px;
+  padding: 7px 15px;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: bold;
+
+}
+
+.publicacion button:hover{
+  background-color: #55a86e;
+}
+
+/*-------------------------------------*/
+
 .container form{
   display: flex;
   gap: 5px;
@@ -178,7 +281,7 @@ footer{
 
   .Resaltado{
     color:rgb(216, 216, 216);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-weight: bold;
   }
 
@@ -194,7 +297,7 @@ main{
   display: flex;
   flex-direction: column;  
   gap: 10px;
-  background-color: #1a1a1a;
+  background-color: #0f0f0f;
   padding: 20px;
   border-radius: 10px;
   max-width: 400px;
@@ -226,14 +329,14 @@ main{
 
 .Formulario label{
   color:#ffffff;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
 }
 
 .Formulario h2{
   text-align: center;
   color: white;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;  
 }
 

@@ -9,6 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Cuenta</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -42,10 +45,27 @@
             <h2>Crear Cuenta</h2>
             <input type="text" name="Name" placeholder="Ingresa el nombre...">
             <input type="text" name="LastName" placeholder="Ingresa el apellido...">
+            <input type="text" name="Mail" placeholder="Ingresa tu correo...">
+            <input type="text" name="Number" placeholder="Ingresa tu número celular...">
+
+            <label for="nationality">Selecciona tu genero:</label>
+            <select name="nationality" id="nationality" size="3">
+                <option value="Hombre">Hombre</option>
+                <option value="Mujer">Mujer</option>
+            </select>
+
             <input type="date" name="Birthday">
             <input type="password" name="Password" placeholder="Ingresa la contraseña...">
             <input type="password" name="PasswordVer" placeholder="Verifica la contraseña...">
             <input type="file" name="Archivo">
+            <label for="nationality">Selecciona tu país de nacimiento:</label>
+
+            <select name="nationality" id="nationality" size="3">
+                <option value="Mexico">México</option>
+                <option value="USA">Estados Unidos</option>
+                <option value="Canada">Canadá</option>
+            </select>
+            
             <label for="nationality">Selecciona tu nacionalidad:</label>
             <select name="nationality" id="nationality" size="3">
                 <option value="Mexico">México</option>
