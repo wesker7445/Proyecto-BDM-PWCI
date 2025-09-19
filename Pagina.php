@@ -49,7 +49,7 @@
                   <article class="post">
                       <h3>Los 5 Momentos Inolvidables del Mundial de 2014</h3>
                       <div class="post-info"> 
-                          <span>Publicado el: <strong>17 de septiembre de 2025</strong> </span> • 
+                          <span>Publicado el: <strong>17 de septiembre de 2025</strong>   </span> • 
                           <span>Categoría: <strong>Goles</strong> </span> • 
                           <span>Creado por <strong> Juan </strong> </span>
                       </div>
