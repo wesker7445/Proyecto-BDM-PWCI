@@ -20,6 +20,7 @@
     <div class="user">
         <img src="https://imgs.search.brave.com/bHAXnPjJGeaQY0fRdCk7KFKffJZzwToorrO27ygbV20/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzA4Lzhi/L2Y3LzA4OGJmNzYw/NzNhMjFjNWJlMDUx/YTY1YmUwOTgwYTc1/LmpwZw" height="50" width="50">
         <a href="MisPosts.php"><h3>Juan</h3></a>
+        <a href="Admin"><h3>Modo admin</h3></a>
     </div>
 </header>
 <nav>
@@ -53,30 +54,15 @@
             <span>Fecha: 17 de septiembre de 2025</span>
         </div>
 
-        <p class="introduccion">
-      El Mundial de Brasil 2014 nos dejó jugadas para la historia y emociones a flor de piel. Acompáñanos a revivir los cinco momentos que definieron este torneo.
-    </p>
-
-    <div class="cuerpo-articulo">
-      <p>
-        El Mineirazo fue un momento que silenció a todo un país. La anfitriona Brasil cayó estrepitosamente ante una Alemania que se coronaría campeona...
-      </p>
-
-      <p>
-        Corría el minuto 113 de una tensa final cuando Mario Götze controló con el pecho un pase de Schürrle y, sin dejarla caer, remató para darle la copa a Alemania...
-      </p>
-      
-      </div>
-
-    <div class="conclusion">
-      <p>
-        En resumen, el Mundial de 2014 fue un torneo lleno de sorpresas y drama. Para ti, ¿cuál fue el momento más memorable? ¡Déjanos tu opinión en los comentarios!
-      </p>
-    </div>
+       <p>El Mundial de Brasil 2014 nos dejó jugadas para la historia y emociones a flor de piel. Acompáñanos a revivir los cinco momentos que definieron este torneo.
+          El Mineirazo fue un momento que silenció a todo un país. La anfitriona Brasil cayó estrepitosamente ante una Alemania que se coronaría campeona...
+          Corría el minuto 113 de una tensa final cuando Mario Götze controló con el pecho un pase de Schürrle y, sin dejarla caer, remató para darle la copa a Alemania...
+          En resumen, el Mundial de 2014 fue un torneo lleno de sorpresas y drama. Para ti, ¿cuál fue el momento más memorable? ¡Déjanos tu opinión en los comentarios!</p>
 
     <img src="https://imgs.search.brave.com/Vmog522NsuqwlLRfDd-RE_Bu-65KsU9yqCkmY7F_KiY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pY2hl/Zi5iYmNpLmNvLnVr/L2FjZS93cy82NDAv/YW16L3dvcmxkc2Vy/dmljZS9saXZlL2Fz/c2V0cy9pbWFnZXMv/MjAxNC8wNy8xNC8x/NDA3MTQwMDQzMTRf/bWFyaW9fZ29ldHpl/X2FuZHJlX3NjaHVl/cnJsZV9hbmRfamVy/b21lX2JvYXRlbmdf/XzYyNHgzNTFfYWZw/LmpwZy53ZWJw" alt="Jugadores alemanes celebrando">
 
     <form action="">
+    <button><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-thumb-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3" /></svg></button>
     <input type="text" name="Comentario" placeholder="Pienso en...">
     <button> Enviar </button>
     
