@@ -65,15 +65,16 @@
 
         <div class="posts-container">
             <h2>Mis Publicaciones</h2>
-            
-            <article class="post">
-                <h3>Los 5 Momentos Inolvidables del Mundial de 2014</h3>
-                <div class="post-info"> 
-                    <span>Publicado el: 17 de septiembre de 2025</span> • 
-                    <span>Categoría: Goles</span>
-                </div>
-                <p>El Mundial de Brasil 2014 nos dejó jugadas para la historia y emociones a flor de piel. Acompáñanos a revivir los cinco momentos que definieron este torneo...</p>
-            </article>
+            <a href="Publicacion.php">
+                <article class="post">
+                    <h3>Los 5 Momentos Inolvidables del Mundial de 2014</h3>
+                    <div class="post-info"> 
+                        <span>Publicado el: 17 de septiembre de 2025</span> • 
+                        <span>Categoría: Goles</span>
+                    </div>
+                    <p>El Mundial de Brasil 2014 nos dejó jugadas para la historia y emociones a flor de piel. Acompáñanos a revivir los cinco momentos que definieron este torneo...</p>
+                </article>
+            </a>
         </div>
     </main>
 
