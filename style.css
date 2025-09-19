@@ -55,6 +55,24 @@ header .user h3{
   padding: 10px 20px;
 }
 
+header .user a{
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+header .user a:hover{
+  transform: scale(1.05);
+}
+
+header .user a h3{
+  transition: background-color 0.3s ease;
+}
+
+header .user a:hover h3{
+  background-color: #6cd085;
+  color: #000;
+}
+
 header .user img{
   border-radius: 50%;
   object-fit: cover;
@@ -127,9 +145,6 @@ nav ul li.container{
   margin-left: 0;
 }
 
-/* Publicacion */
-
-/*-------------------------------------*/
 .publicacion{
   background-color: #333;
   max-width: 800px;
@@ -226,7 +241,6 @@ nav ul li.container{
   background-color: #55a86e;
 }
 
-/*-------------------------------------*/
 
 .container form{
   display: flex;
@@ -285,8 +299,12 @@ footer{
     font-weight: bold;
   }
 
-  /*Crear Cuenta*/
-main{
+  .main-stacked {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  main{
   flex: 1;
   display: flex;
   justify-content: center;  
@@ -340,7 +358,25 @@ main{
   font-weight: bold;  
 }
 
-/*Estilo de la seleccion de archivos*/
+.Formulario .form-link{
+  text-align: center;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin-top: 10px;
+}
+
+.Formulario .form-link a{
+  color: #6cd085;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.Formulario .form-link a:hover{
+  color: #55a86e;
+  text-decoration: underline;
+}
+
 input[type="file"]{
   color: white;
   font-weight: bold;
@@ -361,6 +397,180 @@ input[type="file"]::file-selector-button {
   margin-right: 25px;
 }
 
-input[type="file"]::file-selector-button:hover {
-  background-color: #55a86e;
+
+
+.perfil-usuario {
+  background-color: #333;
+  max-width: 800px;
+  margin: 20px auto 40px auto;
+  border-radius: 15px;
+  padding: 40px 50px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  color: #e0e0e0;
+  position: relative;
+  z-index: 5;
+}
+
+.foto-perfil img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #6cd085;
+}
+
+.info-perfil h1 {
+  color: #ffffff;
+  font-size: 2.5em;
+  margin: 0 0 15px 0;
+  font-weight: bold;
+}
+
+.info-perfil .stats {
+  color: #6cd085;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.info-perfil .descripcion {
+  color: #aaa;
+  font-style: italic;
+  font-size: 1.1em;
+  margin: 10px 0 0 0;
+}
+
+.perfil-completo-misposts {
+  background-color: #333;
+  max-width: 800px;
+  margin: 20px auto 40px auto;
+  border-radius: 15px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  color: #e0e0e0;
+  position: relative;
+  z-index: 10;
+}
+
+.foto-perfil-misposts img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #6cd085;
+}
+
+.info-perfil-misposts {
+  text-align: center;
+  color: #e0e0e0;
+}
+
+.info-perfil-misposts h1 {
+  color: #ffffff;
+  font-size: 2.5em;
+  margin: 0 0 15px 0;
+  font-weight: bold;
+}
+
+.stats-misposts {
+  color: #6cd085;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.descripcion-misposts {
+  color: #aaa;
+  font-style: italic;
+  font-size: 1.1em;
+  margin: 10px 0 0 0;
+}
+
+.btn-editar-perfil {
+  background: linear-gradient(135deg, #6cd085, #55a86e);
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 30px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 25px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-editar-perfil:hover {
+  background: linear-gradient(135deg, #55a86e, #4a8c5a);
+}
+
+.btn-editar-perfil:active {
+  background: linear-gradient(135deg, #4a8c5a, #3d7449);
+}
+
+.btn-editar-perfil svg {
+  width: 22px;
+  height: 22px;
+}
+
+.posts-container {
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.posts-container h2 {
+  color: #ffffff;
+  font-size: 2em;
+  text-align: center;
+  margin: 60px 0 30px 0;
+  font-weight: bold;
+  border-top: 2px solid #555;
+  padding-top: 30px;
+}
+
+.post {
+  background-color: #333;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  padding: 30px;
+  color: #e0e0e0;
+  line-height: 1.7;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.post h3 {
+  color: #ffffff;
+  font-size: 1.5em;
+  margin: 0 0 15px 0;
+  font-weight: bold;
+}
+
+.post-info {
+  color: #aaa;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #555;
+  padding-bottom: 10px;
+}
+
+.post p {
+  font-size: 1.1em;
+  margin: 0;
+  line-height: 1.6;
 }
