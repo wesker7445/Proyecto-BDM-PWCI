@@ -634,6 +634,81 @@ input[type="file"]::file-selector-button {
   text-align: justify;
 }
 
+/*Admin*/
+
+
+/*Aprobar Comentarios*/
+
+.Comentario-card{
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.Header h1{
+  text-align: center;
+  font-size: 24px;
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #555;
+}
+
+.meta{
+  text-align: center;
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.meta span{
+  font-weight: bold;
+  color: #fff;
+}
+
+.content p{
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.actions{
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 20px;
+}
+
+.actions button{
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3 ease;
+}
+
+.btn-admitir{
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-admitir:hover{
+  background-color: #45a049;
+}
+
+.btn-noadmitir{
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-noadmitir:hover{
+  background-color: #d32f2f;
+}
+
+/*----------------------------------------------*/
 
 /*Animaciones*/
 @keyframes rotacion{
