@@ -19,7 +19,7 @@
         <div class="user">
             <img src="https://imgs.search.brave.com/bHAXnPjJGeaQY0fRdCk7KFKffJZzwToorrO27ygbV20/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzA4Lzhi/L2Y3LzA4OGJmNzYw/NzNhMjFjNWJlMDUx/YTY1YmUwOTgwYTc1/LmpwZw" height="50" width="50">
             <a href="MisPosts.php" ><h3>Juan</h3></a>
-            <a href="Admin"><h3>Modo admin</h3></a>
+            <a href="Admin.php"><h3>Modo admin</h3></a>
         </div>
     </header>
 
