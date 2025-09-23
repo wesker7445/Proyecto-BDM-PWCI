@@ -158,6 +158,16 @@ nav ul li.container{
   line-height: 1.7;
 }
 
+main.publicacion article {
+  display: flex; 
+  flex-direction: column;
+  background-color: #3d3d3d;
+  border-radius: 15px;
+  padding: 30px;
+  color: #e0e0e0;
+  margin-bottom: 40px;
+}
+
 .publicacion h1{
   text-align: center;
   font-weight: bold;
@@ -195,17 +205,13 @@ nav ul li.container{
 
 .publicacion form{
   display: flex;
-  margin-left: auto;
-  margin: 40px auto;
-  margin-right: auto;
-  max-width: 1000px;
-  height: auto;
-  margin-top: 30px;
-  align-items: center;  
+   width: 100%; 
+  margin: 40px auto 0; 
+  align-items: center;
   gap: 10px;
 }
 
-.publicacion input[type="text"]{
+.publicacion textarea{
   border: none;
   outline: none;
   background-color: #555555;
@@ -213,7 +219,8 @@ nav ul li.container{
   border-radius: 15px;
   padding: 10px 20px;
   margin: 10px;
-  width: 70%;
+  flex-grow: 1;
+  margin: 0;
   font-weight: bold;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -231,7 +238,9 @@ nav ul li.container{
   transition: background-color 0.3 ease;
   transition: scale 0.3 ease;
 
-
+  margin: 10px;
+  flex-grow: 1;
+  margin: 0;
   background-color: #555555;
   color: #ffffff;
   border-radius: 15px;
@@ -242,6 +251,9 @@ nav ul li.container{
 
 }
 
+.publicacion .Dislike:hover{
+  background-color: #df2a12;
+}
 
 .publicacion button:hover{
   background-color: #55a86e;
@@ -335,15 +347,16 @@ footer{
   border-radius: 10px;
   max-width: 400px;
   width: 100%;
+  margin-bottom: 40px;
 }
 
-.Formulario input, .Formulario select, .Formulario button{
+.Formulario input, .Formulario select, .Formulario button, textarea{
   padding: 8px;
   border: none;
   border-radius: 5px;
 }
 
-.Formulario input, .Formulario select{
+.Formulario input, .Formulario select, textarea{
   background-color: #474747;
   color: white;
 }
@@ -574,6 +587,7 @@ input[type="file"]::file-selector-button {
   font-size: 1.5em;
   margin: 0 0 15px 0;
   font-weight: bold;
+  text-align: center;
 }
 
 .post-info {
@@ -591,6 +605,12 @@ input[type="file"]::file-selector-button {
 }
 
 /*----------------------------------------*/
+
+main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .post-preview {
   display: flex;
@@ -633,6 +653,7 @@ input[type="file"]::file-selector-button {
   line-height: 1.6;
   text-align: justify;
 }
+
 
 /*Admin*/
 
@@ -708,6 +729,17 @@ input[type="file"]::file-selector-button {
   background-color: #d32f2f;
 }
 
+
+
+.GestionarM{
+  background-color: #333;
+  max-width: 800px;
+  margin: 40px auto;
+  border-radius: 15px;
+  padding: 40px 50px;
+  color: #e0e0e0;
+  line-height: 1.7;
+}
 /*----------------------------------------------*/
 
 /*Animaciones*/

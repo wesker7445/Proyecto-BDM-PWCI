@@ -76,6 +76,20 @@
                     <p>El Mundial de Brasil 2014 nos dejó jugadas para la historia y emociones a flor de piel. Acompáñanos a revivir los cinco momentos que definieron este torneo...</p>
                 </article>
             </a>
+
+        <a href="Publicacion.php">
+            <article class="post">
+                <h3>¡La gran final ha llegado y entre dos potencias del futbol!</h3>
+                    <div class="post-info"> 
+                        <span>Publicado el: <strong>17 de septiembre de 2025</strong>   </span> • 
+                        <span>Categoría: <strong>Partidos</strong> </span> • 
+                        <span>Creado por <strong> Juan </strong> </span>
+                 </div>
+            <p>Argentina, liderada por el icónico Lionel Messi, busca su tercer título mundial después de 36 años...</p>
+        </article>
+    </a>
+  </main>
+
         </div>
     </main>
 
