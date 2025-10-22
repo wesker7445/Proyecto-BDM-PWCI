@@ -1,4 +1,58 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("location: InicioSesion.php");
+    exit;
+}
+
+$username_session = $_SESSION['username'];
+
+$db_host = "localhost";
+$db_user = "root";
+$db_pass = "";
+$db_name = "proyecto";
+
+$conexion = new mysqli($db_host, $db_user, $db_pass, $db_name);
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
+}
+
+$sql = "SELECT tipo_usuario FROM usuarios WHERE nombre_usuario = ?"; 
+$stmt = $conexion->prepare($sql);
+
+if ($stmt === false) {
+    die("Error al preparar la consulta: " . $conexion->error);
+}
+
+$stmt->bind_param("s", $username_session);
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+$tipo_usuario = 0;
+
+if ($resultado->num_rows === 1) {
+    $fila = $resultado->fetch_assoc();
+    $tipo_usuario = $fila['tipo_usuario'];
+} else {
+    // Si el usuario de la sesión no existe en la BD, algo está mal.
+    // Mejor destruir la sesión y mandarlo al login.
+    session_destroy();
+    header("Location: CrearC.php");
+    exit;
+}
+
+
+$stmt->close();
+$conexion->close();
+
+
+if ($tipo_usuario != 1) {
+    // Redirigir a la página principal o a una de "acceso denegado"
+    header("Location: Pagina.php"); // Cambia "Pagina.php" por la página a la que quieres enviarlos
+    exit; // ¡Muy importante! Detiene la ejecución del script.
+}
+
 ?>
 
 <!DOCTYPE html>

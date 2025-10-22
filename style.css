@@ -405,6 +405,13 @@ footer{
   text-decoration: underline;
 }
 
+.Formulario p {
+  color: #ffffff;
+  font-weight: bold;
+  size: 15px;
+}
+
+
 input[type="file"]{
   color: white;
   font-weight: bold;
@@ -740,6 +747,46 @@ main{
   color: #e0e0e0;
   line-height: 1.7;
 }
+
+
+.password-container {
+    position: relative; 
+    width: 100%; 
+}
+
+
+.password-container input {
+    width: 100%;
+   
+    padding-right: 45px; 
+    box-sizing: border-box; 
+}
+
+
+.toggle-btn {
+    position: absolute;  
+    top: 50%;            
+    right: 0px;         
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: none;
+}
+
+.toggle-btn svg {
+    width: 14px;  
+    height: 14px; 
+}
+
+.d-none {
+    display: none;
+}
+
 /*----------------------------------------------*/
 
 /*Animaciones*/
