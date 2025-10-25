@@ -9,6 +9,12 @@ $isLoggedIn = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 if ($isLoggedIn) {
     $username_session = $_SESSION['username'];
 }
+
+if (isset($_SESSION['error'])){    
+    $error = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -84,6 +90,20 @@ if ($isLoggedIn) {
             <p>Argentina, liderada por el icónico Lionel Messi, busca su tercer título mundial después de 36 años...</p>
         </article>
     </a>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<?php if (isset($error)) : ?>
+<script>
+Swal.fire({
+    icon: 'error',
+    title: 'Acceso denegado',
+    text: <?= json_encode($error) ?>,
+    confirmButtonColor: '#d33'
+});
+</script>
+<?php endif; ?>
+
 </main>
 <footer>
     <p class="Resaltado">© 2025 Mi Pagina de Mundiales | MiPaginadeMundiales@gmail.com | 815678921 <p>

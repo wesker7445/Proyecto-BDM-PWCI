@@ -8,17 +8,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $username_session = $_SESSION['username'];
 
-$db_host = "localhost";
-$db_user = "root";
-$db_pass = "";
-$db_name = "proyecto";
-
-$conexion = new mysqli($db_host, $db_user, $db_pass, $db_name);
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
-
-$sql = "SELECT tipo_usuario FROM usuarios WHERE nombre_usuario = ?"; 
+require_once "Connection.php";
+$sql = "SELECT Rol FROM usuarios WHERE Nombre_Usuario = ?"; 
 $stmt = $conexion->prepare($sql);
 
 if ($stmt === false) {
@@ -33,7 +24,7 @@ $tipo_usuario = 0;
 
 if ($resultado->num_rows === 1) {
     $fila = $resultado->fetch_assoc();
-    $tipo_usuario = $fila['tipo_usuario'];
+    $tipo_usuario = $fila['Rol'];
 } else {
     // Si el usuario de la sesión no existe en la BD, algo está mal.
     // Mejor destruir la sesión y mandarlo al login.
@@ -48,11 +39,10 @@ $conexion->close();
 
 
 if ($tipo_usuario != 1) {
-    // Redirigir a la página principal o a una de "acceso denegado"
-    header("Location: Pagina.php"); // Cambia "Pagina.php" por la página a la que quieres enviarlos
-    exit; // ¡Muy importante! Detiene la ejecución del script.
+    $_SESSION['error'] = 'No tienes permisos para acceder a esta modo.';
+    header("Location: Pagina.php");
+    exit;
 }
-
 ?>
 
 <!DOCTYPE html>

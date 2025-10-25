@@ -12,22 +12,14 @@ $error_message = ""; // Variable para guardar mensajes de error
 
 // Procesar el formulario solo si se envió por POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $db_host = "localhost";
-    $db_user = "root";
-    $db_pass = "";
-    $db_name = "proyecto";
-
-    $conexion = new mysqli($db_host, $db_user, $db_pass, $db_name);
-    if ($conexion->connect_error) {
-        die("Error de conexión: " . $conexion->connect_error);
-    }
+    require_once "Connection.php";
 
     // Usar las claves correctas de $_POST ('Name' y 'Password')
     $username = $_POST['Name'];
     $password = $_POST['Password'];
 
     // Preparar la consulta para evitar inyección SQL
-    $sql = "SELECT contrasena FROM usuarios WHERE nombre_usuario = ?";
+    $sql = "SELECT Pass FROM usuarios WHERE Nombre_Usuario = ?";
     $stmt = $conexion->prepare($sql);
 
     if ($stmt === false) {
@@ -40,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($resultado->num_rows === 1) {
         $fila = $resultado->fetch_assoc();
-        $hash_guardado = $fila['contrasena'];
+        $hash_guardado = $fila['Pass'];
 
         // Verificar la contraseña
         if (password_verify($password, $hash_guardado)) {
