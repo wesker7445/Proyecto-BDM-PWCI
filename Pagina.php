@@ -41,69 +41,72 @@ if (isset($_SESSION['error'])){
     </div>
     <?php endif; ?>
 </header>
-<nav>
-    <ul>
-        <li> 
-            <a href="#">Categorías</a>
-            <ul>
-                <li><a href="#">Faltas</a></li>
-                <li><a href="#">Jugadas polémicas</a></li>
-                <li><a href="#">Goles</a></li>
-                <li><a href="#">Partidos</a></li>
-                <li><a href="#">Otro</a></li>
-            </ul>
-        </li>
-        <?php if ($isLoggedIn): ?>
-        <li><a href="logout.php">Cerrar Sesión</a></li>
-        <li><a href="CrearP.php">Crear Publicación</a></li>
-        <?php else: ?>
-        <li><a href="InicioSesion.php">Iniciar Sesión</a></li>
-        <?php endif; ?>
-        <li class="container">
-            <form action="Noticias.php">
-                <input type="text" name="Busqueda" placeholder="Buscar...">
-                <button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-zoom"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></button>
-            </form>
-        </li>
-    </ul>
-</nav>
-<main class="publicacion">
-    <a href="Publicacion.php">
-        <article class="post-preview">
-            <h3>Los 5 Momentos Inolvidables del Mundial de 2014</h3>
-            <div class="post-info-preview"> 
-                <span>Publicado el: <strong>20 de octubre de 2025</strong> </span> • 
-                <span>Categoría: <strong>Goles</strong> </span> • 
-                <span>Creado por <strong> Autor Real del Post </strong> </span>
-            </div>
-            <p>El Mundial de Brasil 2014 nos dejó jugadas para la historia y emociones a flor de piel. Acompáñanos a revivir los cinco momentos que definieron este torneo...</p>
-        </article>
-    </a>
-    <a href="Publicacion.php">
-        <article class="post-preview">
-            <h3>¡La gran final ha llegado y entre dos potencias del futbol!</h3>
-            <div class="post-info-preview"> 
-                <span>Publicado el: <strong>20 de octubre de 2025</strong> </span> • 
-                <span>Categoría: <strong>Partidos</strong> </span> • 
-                <span>Creado por <strong>Autor Real del Post</strong> </span>
-            </div>
-            <p>Argentina, liderada por el icónico Lionel Messi, busca su tercer título mundial después de 36 años...</p>
-        </article>
-    </a>
+<div class= "layout">
+    <nav class="sidebar">
+        <ul>
+            <li class="container"> 
+                <form action="Noticias.php">
+                    <div class="search-box">
+                        <input type="text" name="Busqueda" placeholder="Buscar...">
+                        <button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-zoom"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></button>
+                    </div>
+                </form>
+            </li>
+            <li> 
+                <a href="#">Categorías</a>
+                <ul>
+                    <li><a href="#">Faltas</a></li>
+                    <li><a href="#">Golres</a></li>
+                    <li><a href="#">Controversia</a></li>
+                    <li><a href="#">Jugadas</a></li>
+                    </ul>
+            </li>
+            <?php if ($isLoggedIn): ?>
+            <li><a href="logout.php">Cerrar Sesión</a></li>
+            <li><a href="CrearP.php">Crear Publicación</a></li>
+            <?php else: ?>
+            <li><a href="InicioSesion.php">Iniciar Sesión</a></li>
+            <?php endif; ?>
+        </ul>
+    </nav>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <main class="publicacion">
+        <a href="Publicacion.php">
+            <article class="post-preview">
+                <h3>Los 5 Momentos Inolvidables del Mundial de 2014</h3>
+                <div class="post-info-preview"> 
+                    <span>Publicado el: <strong>20 de octubre de 2025</strong> </span> • 
+                    <span>Categoría: <strong>Goles</strong> </span> • 
+                    <span>Creado por <strong> Autor Real del Post </strong> </span>
+                </div>
+                <p>El Mundial de Brasil 2014 nos dejó jugadas para la historia y emociones a flor de piel. Acompáñanos a revivir los cinco momentos que definieron este torneo...</p>
+            </article>
+        </a>
+        <a href="Publicacion.php">
+            <article class="post-preview">
+                <h3>¡La gran final ha llegado y entre dos potencias del futbol!</h3>
+                <div class="post-info-preview"> 
+                    <span>Publicado el: <strong>20 de octubre de 2025</strong> </span> • 
+                    <span>Categoría: <strong>Partidos</strong> </span> • 
+                    <span>Creado por <strong>Autor Real del Post</strong> </span>
+                </div>
+                <p>Argentina, liderada por el icónico Lionel Messi, busca su tercer título mundial después de 36 años...</p>
+            </article>
+        </a>
 
-<?php if (isset($error)) : ?>
-<script>
-Swal.fire({
-    icon: 'error',
-    title: 'Acceso denegado',
-    text: <?= json_encode($error) ?>,
-    confirmButtonColor: '#d33'
-});
-</script>
-<?php endif; ?>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <?php if (isset($error)) : ?>
+    <script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Acceso denegado',
+        text: <?= json_encode($error) ?>,
+        confirmButtonColor: '#d33'
+    });
+    </script>
+    <?php endif; ?>
+</div>
 </main>
 <footer>
     <p class="Resaltado">© 2025 Mi Pagina de Mundiales | MiPaginadeMundiales@gmail.com | 815678921 <p>

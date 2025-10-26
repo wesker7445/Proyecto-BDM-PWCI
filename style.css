@@ -1,10 +1,16 @@
 body {
-    background-color: rgb(44, 44, 44);
+   background-color: rgb(44, 44, 44);
     margin: 0;
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    
+    /* --- ¡AÑADIDO! --- */
+    /* Dejamos 80px de espacio arriba para el header */
+    padding-top: 80px; 
+    /* Dejamos 220px de espacio a la izquierda para la sidebar */
+    padding-left: 220px; 
+    box-sizing: border-box; /* Buena práctica */
+    
+    /* Ya no necesitamos grid aquí, los elementos fijos lo manejan */
 }
 
 a{
@@ -18,6 +24,12 @@ header{
   padding: 15px 20px;
   background-color: #575757;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  position: fixed;  /* <--- ¡CAMBIO CLAVE! */
+  top: 0;
+  left: 0;          /* Asegura que empieza a la izquierda */
+  width: 100%;      /* Asegura que ocupe todo el ancho */
+  z-index: 1001;
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
 }
 
 header h1 {
@@ -81,6 +93,12 @@ header .user img{
   object-fit: cover;
 }
 
+nav {
+    position: sticky;
+    top: 80px; /* 80px es el alto de tu header */
+    z-index: 1000;
+}
+
 nav a {
     display: block;
     text-decoration: none;
@@ -90,25 +108,23 @@ nav a {
 }
 
 
-nav{
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+
 
 nav ul{
   display: flex;
+  flex-direction: column;   /* <-- CAMBIO: De fila a columna */
+  align-items: flex-start; /* <-- CAMBIO: Alinea la columna a la izquierda */
+  position: relative;      /* <-- AÑADIDO: Para anclar la búsqueda */
   list-style-type: none;
   padding: 0;
   margin: 0;
   width: 100%;
-  align-items: center;
+  height: 100%;
   background-color: rgb(65, 65, 65);
 }
 
 nav ul li{
-  flex-grow: 1;
-  text-align: center;
+  flex-grow: 0;
   position: relative;
 }
 
@@ -128,11 +144,10 @@ li a:hover {
 
 nav ul li ul{
   display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #333;
-  min-width: 180px;
+  position: relative;
+  background-color: #3d3d3d; /* Un color ligeramente diferente para el submenú */
+  min-width: 100%; /* Ocupa todo el ancho de la barra lateral */
+  padding-left: 0; /* Asegura que la lista anidada no tenga padding extra */
 }
 
 nav ul li ul li{
@@ -144,9 +159,75 @@ nav ul li:hover ul{
 }
 
 nav ul li.container{
+  position: relative;
   flex-grow: 0;
-  margin-left: 0;
 }
+
+
+
+/* --- BARRA VERTICAL --- */
+.layout {
+  display: flex;
+}
+
+/* La barra lateral */
+.sidebar {
+    width: 220px;
+    background-color: rgb(65, 65, 65);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 10px;
+    
+    /* --- ¡CAMBIOS CLAVE! --- */
+    position: fixed;   /* <--- CAMBIO a fixed */
+    left: 0;
+    top: 80px;         /* Empieza justo donde termina el header (80px) */
+    height: calc(100vh - 80px); /* Ocupa el resto de la altura */
+    z-index: 1000;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.sidebar li {
+  width: 100%;
+}
+
+.sidebar a {
+  display: block;
+  padding: 15px 20px;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #6cd085;
+  color: #000;
+}
+
+.sidebar li.container {
+    padding: 10px 20px; /* Usa el mismo padding que los enlaces para consistencia */
+    width: 100%; /* Asegura que tome todo el ancho */
+    box-sizing: border-box; /* Incluye el padding en el cálculo del ancho */
+}
+
+/* El contenido principal se corre a la derecha */
+main {
+  padding: 40px;
+  flex: 1;
+  display: grid;
+  justify-content: center;  
+  align-items: center;  
+  min-height: calc(100vh - 120px); 
+}
+
 
 .publicacion{
   background-color: #333;
@@ -274,18 +355,18 @@ main.publicacion article {
   gap: 5px;
   align-items: center;
   margin: 0;
-  padding: 0;
   border: transparent;
+  width: 100%;
 }
 
 .container input[type="text"]{
   border: none;
   outline: none;
-  background-color: #555555;
+  background-color: transparent;
   color: white;
-  border-radius: 15px;
-  padding: 5px;
-  margin: 10px;
+  padding: 5px 10px;
+  flex-grow: 1;
+  box-sizing: border-box;
 }
 
 .container input::placeholder{
@@ -307,14 +388,36 @@ main.publicacion article {
   transform: scale(1.2);
 }
 
-main{
-    flex: 1;
-    padding: 20px;
+/* --- NUEVOS ESTILOS PARA LA CAJA DE BÚSQUEDA --- */
+.search-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    background-color: #555555; 
+    border-radius: 15px;    
+}
+
+/* Asegura que el input llene la caja, manteniendo el padding */
+.search-box input[type="text"] {
+    flex-grow: 1;
+    /* Usa padding a la derecha para hacer espacio para el botón */
+    padding-right: 35px; 
+}
+
+/* Posiciona el botón dentro del área visual del campo de entrada */
+.search-box button {
+    position: absolute; /* Lo saca del flujo normal */
+    right: 8px; /* Lo posiciona en el lado derecho */
+    background-color: transparent; /* Hace que el botón en sí sea transparente */
+    border: none;
+    cursor: pointer;
+    padding: 5px;
 }
 
 footer{
   margin: 0;
-  padding: 15px;
+  padding: 1px;
   overflow: hidden;
   background-color: rgb(34, 34, 34);
   text-align: center;
@@ -331,13 +434,6 @@ footer{
     align-items: center;
   }
 
-  main{
-  flex: 1;
-  display: flex;
-  justify-content: center;  
-  align-items: center;    
-  min-height: calc(100vh - 120px); 
-}
 .Formulario {
   display: flex;
   flex-direction: column;  
@@ -613,11 +709,6 @@ input[type="file"]::file-selector-button {
 
 /*----------------------------------------*/
 
-main{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 .post-preview {
   display: flex;
@@ -786,6 +877,96 @@ main{
 .d-none {
     display: none;
 }
+
+/* --- ESTILOS DE PERFIL --- */
+
+/* Estilo para la foto de perfil actual que aparece en modo editar */
+.perfil-actual {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.perfil-actual p {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.perfil-actual img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Hace la imagen redonda */
+    border: 4px solid #6cd085; /* Borde con tu color verde */
+    object-fit: cover; /* Asegura que la imagen llene el círculo sin deformarse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* --- ESTILOS DINÁMICOS (LA MAGIA) --- */
+
+/* * Botón principal:
+ * Le damos un color "verde" por defecto (modo crear) 
+ */
+.Formulario button[type="submit"] {
+    background-color: #6cd085; /* Tu verde */
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.Formulario button[type="submit"]:hover {
+    background-color: #59b070; /* Un verde más oscuro */
+}
+
+/* * ¡AQUÍ! Si el body tiene la clase ".modo-editar",
+ * cambiamos el color del botón a un "azul" de "actualizar".
+ */
+body.modo-editar .Formulario button[type="submit"] {
+    background-color: #3085d6; /* Azul (de SweetAlert) */
+}
+
+body.modo-editar .Formulario button[type="submit"]:hover {
+    background-color: #286fab; /* Un azul más oscuro */
+}
+
+/* * También podemos cambiar el título h2
+ */
+body.modo-crear .Formulario h2 {
+    color: #4CAF50; /* Verde */
+}
+
+body.modo-editar .Formulario h2 {
+    color: #3085d6; /* Azul */
+}
+
+/* * Recomendación: Mejora la estructura con Fieldset
+ * (Opcional, pero muy recomendado para diseño)
+ */
+
+/* Envuelve tus grupos de inputs así:
+   <fieldset>
+       <legend>Datos Personales</legend>
+       <input ...>
+       <input ...>
+   </fieldset>
+   <fieldset>
+       <legend>Seguridad</legend>
+       <input type="password" ...>
+   </fieldset>
+*/
+
+.Formulario fieldset {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.Formulario legend {
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 0 10px;
+    color: #555;
+}
+
 
 /*----------------------------------------------*/
 

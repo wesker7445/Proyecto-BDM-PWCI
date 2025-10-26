@@ -1,46 +1,38 @@
 <?php
-// Iniciar la sesión al principio de todo
+
 session_start();
 
-// Si el usuario ya está logueado, redirigir a la página principal
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    header("Location: Pagina.php");
-    exit;
-}
-//a
-$error_message = ""; // Variable para guardar mensajes de error
-
-// Procesar el formulario solo si se envió por POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
     require_once "Connection.php";
 
-    // Usar las claves correctas de $_POST ('Name' y 'Password')
     $username = $_POST['Name'];
     $password = $_POST['Password'];
 
-    // Preparar la consulta para evitar inyección SQL
-    $sql = "SELECT Pass FROM usuarios WHERE Nombre_Usuario = ?";
+    // --- ¡CAMBIO AQUÍ! ---
+    // Pide también el ID_Usuario
+    $sql = "SELECT ID, Pass FROM usuarios WHERE Nombre_Usuario = ?";
     $stmt = $conexion->prepare($sql);
 
-    if ($stmt === false) {
-        die("Error al preparar la consulta: " . $conexion->error);
-    }
-
+    // ... (bind_param, execute, get_result) ...
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $resultado = $stmt->get_result();
+
 
     if ($resultado->num_rows === 1) {
         $fila = $resultado->fetch_assoc();
         $hash_guardado = $fila['Pass'];
 
-        // Verificar la contraseña
         if (password_verify($password, $hash_guardado)) {
-            // Contraseña correcta, iniciar sesión
+            // Contraseña correcta
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
             
-            // Redirigir a la página principal
+            // --- ¡CAMBIO AQUÍ! ---
+            // Guarda el ID del usuario en la sesión
+            $_SESSION['usuario_id'] = $fila['ID'];
+            
             header("Location: Pagina.php");
             exit;
         } else {

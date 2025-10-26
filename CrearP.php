@@ -33,42 +33,42 @@ $username_session = $_SESSION['username'];
         </div>
     </header>
 
-    <nav>
-        <ul> 
-            <li> 
-                <a href ="#">Categorias</a>
-                <ul>
-                    <li><a href="#">Faltas</a></li>
-                    <li><a href="#">Jugadas polémicas</a></li>
-                    <li><a href="#">Goles</a></li>
-                    <li><a href="#">Partidos</a></li>
-                    <li><a href="#">Otro</a></li>
-                </ul>
-            </li>
-            <li><a href ="InicioSesion.php">Inicio de Sesion</a></li>
-            <li><a href ="Pagina.php">Menu Principal</a></li>
-        </ul>
-    </nav>
+    <div class= "layout">
+        <nav class="sidebar">
+            <ul> 
+                <li> 
+                    <a href ="#">Categorias</a>
+                    <ul>
+                        <li><a href="#">Faltas</a></li>
+                        <li><a href="#">Jugadas polémicas</a></li>
+                        <li><a href="#">Goles</a></li>
+                        <li><a href="#">Partidos</a></li>
+                        <li><a href="#">Otro</a></li>
+                    </ul>
+                </li>
+                <li><a href ="Pagina.php">Menu Principal</a></li>
+            </ul>
+        </nav>
 
-    <main>
-        <form action="Pagina.php" class="Formulario">
-            <h2>Crear Publicacion</h2>
-            <input type="text" name="Titulo" placeholder="Ingresa el titulo...">
-            <input type="text" name="Descripcion" placeholder="Ingresa la descripcion...">
-            <select name="Categoria" required>
-                <option value="">Selecciona una categoría...</option>
-                <option value="mundial">Faltas</option>
-                <option value="copa-america">Copa América</option>
-                <option value="eurocopa">Jugadas polémicas</option>
-                <option value="champions-league">Goles</option>
-                <option value="liga-local">Partidos</option>
-                <option value="otro">Otro</option>
-            </select>
-            <input type="file" name="Archivo">
-            <button>Publicar</button>
-        </form>
-    </main>
-
+        <main>
+            <form action="Pagina.php" class="Formulario">
+                <h2>Crear Publicacion</h2>
+                <input type="text" name="Titulo" placeholder="Ingresa el titulo...">
+                <input type="text" name="Descripcion" placeholder="Ingresa la descripcion...">
+                <select name="Categoria" required>
+                    <option value="">Selecciona una categoría...</option>
+                    <option value="mundial">Faltas</option>
+                    <option value="copa-america">Copa América</option>
+                    <option value="eurocopa">Jugadas polémicas</option>
+                    <option value="champions-league">Goles</option>
+                    <option value="liga-local">Partidos</option>
+                    <option value="otro">Otro</option>
+                </select>
+                <input type="file" name="Archivo">
+                <button>Publicar</button>
+            </form>
+        </main>
+    </div>
     <footer>
         <p class="Resaltado">© 2025 Mi Pagina de Mundiales | MiPaginadeMundiales@gmail.com | 815678921</p>
     </footer>

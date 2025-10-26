@@ -33,79 +33,62 @@ $username_session = $_SESSION['username'];
             <a href="Admin.php"><h3>Modo admin</h3></a>
         </div>
     </header>
+    <div class= "layout">
+        <nav class="sidebar">
+            <ul> 
+                <li><a href="logout.php">Cerrar Sesión</a></li>
+                <li><a href="CrearP.php">Crear Publicacion</a></li>
+                <li><a href="Pagina.php">Menu Principal</a></li>
+            </ul>
+        </nav>
 
-    <nav>
-        <ul> 
-            <li> 
-                <a href ="#">Categorias</a>
-                <ul>
-                    <li><a href="#">Faltas</a></li>
-                    <li><a href="#">Jugadas polémicas</a></li>
-                    <li><a href="#">Goles</a></li>
-                    <li><a href="#">Partidos</a></li>
-                    <li><a href="#">Otro</a></li>
-                </ul>
-            </li>
-            <li><a href ="InicioSesion.php">Inicio de Sesion</a></li>
-            <li><a href ="CrearP.php">Crear Publicacion</a></li>
-            <li><a href ="Pagina.php">Menu Principal</a></li>
-            <li class="container">  
-                <form action="Noticias.php">
-                    <input type="text" name="Busqueda" placeholder="Buscar...">
-                    <button><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#ffffffff"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-zoom"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></button>
-                </form>
-            </li>
-        </ul>
-    </nav>
-
-    <main class="main-stacked">
-        <div class="perfil-completo-misposts">
-            <div class="foto-perfil-misposts">
-                <img src="MostrarImagen.php" alt="Foto de perfil" height="50" width="50">
+        <main class="main-stacked">
+            <div class="perfil-completo-misposts">
+                <div class="foto-perfil-misposts">
+                    <img src="MostrarImagen.php" alt="Foto de perfil" height="50" width="50">
+                </div>
+                <div class="info-perfil-misposts">
+                    <h1><?php echo htmlspecialchars($username_session); ?></h1>
+                    <p class="stats-misposts">Total de posts: 3</p>
+                    <p class="descripcion-misposts">Apasionado del fútbol y los mundiales</p>
+                    <button class="btn-editar-perfil" onclick="window.location.href='CrearC.php'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                        Editar Perfil
+                    </button>
+                </div>
             </div>
-            <div class="info-perfil-misposts">
-                <h1><?php echo htmlspecialchars($username_session); ?></h1>
-                <p class="stats-misposts">Total de posts: 3</p>
-                <p class="descripcion-misposts">Apasionado del fútbol y los mundiales</p>
-                <button class="btn-editar-perfil" onclick="window.location.href='CrearC.php'">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                        <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                    </svg>
-                    Editar Perfil
-                </button>
-            </div>
-        </div>
 
-        <div class="posts-container">
-            <h2>Mis Publicaciones</h2>
+            <div class="posts-container">
+                <h2>Mis Publicaciones</h2>
+                <a href="Publicacion.php">
+                    <article class="post">
+                        <h3>Los 5 Momentos Inolvidables del Mundial de 2014</h3>
+                        <div class="post-info"> 
+                            <span>Publicado el: 17 de septiembre de 2025</span> • 
+                            <span>Categoría: Goles</span>
+                        </div>
+                        <p>El Mundial de Brasil 2014 nos dejó jugadas para la historia y emociones a flor de piel. Acompáñanos a revivir los cinco momentos que definieron este torneo...</p>
+                    </article>
+                </a>
+
             <a href="Publicacion.php">
                 <article class="post">
-                    <h3>Los 5 Momentos Inolvidables del Mundial de 2014</h3>
-                    <div class="post-info"> 
-                        <span>Publicado el: 17 de septiembre de 2025</span> • 
-                        <span>Categoría: Goles</span>
+                    <h3>¡La gran final ha llegado y entre dos potencias del futbol!</h3>
+                        <div class="post-info"> 
+                            <span>Publicado el: <strong>17 de septiembre de 2025</strong>   </span> • 
+                            <span>Categoría: <strong>Partidos</strong> </span> • 
+                            <span>Creado por <strong> Juan </strong> </span>
                     </div>
-                    <p>El Mundial de Brasil 2014 nos dejó jugadas para la historia y emociones a flor de piel. Acompáñanos a revivir los cinco momentos que definieron este torneo...</p>
-                </article>
-            </a>
+                <p>Argentina, liderada por el icónico Lionel Messi, busca su tercer título mundial después de 36 años...</p>
+            </article>
+        </a>
 
-        <a href="Publicacion.php">
-            <article class="post">
-                <h3>¡La gran final ha llegado y entre dos potencias del futbol!</h3>
-                    <div class="post-info"> 
-                        <span>Publicado el: <strong>17 de septiembre de 2025</strong>   </span> • 
-                        <span>Categoría: <strong>Partidos</strong> </span> • 
-                        <span>Creado por <strong> Juan </strong> </span>
-                 </div>
-            <p>Argentina, liderada por el icónico Lionel Messi, busca su tercer título mundial después de 36 años...</p>
-        </article>
-    </a>
-  </main>
-
-        </div>
+        
     </main>
-
+</div>
     <footer>
         <p class="Resaltado">© 2025 Mi Pagina de Mundiales | MiPaginadeMundiales@gmail.com | 815678921</p>
     </footer>
