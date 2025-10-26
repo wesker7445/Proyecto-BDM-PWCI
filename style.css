@@ -142,21 +142,12 @@ li a:hover {
   background-color: rgba(21, 238, 166, 0.486);
 }
 
-nav ul li ul{
-  display: none;
-  position: relative;
-  background-color: #3d3d3d; /* Un color ligeramente diferente para el submenú */
-  min-width: 100%; /* Ocupa todo el ancho de la barra lateral */
-  padding-left: 0; /* Asegura que la lista anidada no tenga padding extra */
-}
+
 
 nav ul li ul li{
   width: 100%;
 }
 
-nav ul li:hover ul{
-  display: block;
-}
 
 nav ul li.container{
   position: relative;
@@ -192,6 +183,28 @@ nav ul li.container{
   padding: 0;
   margin: 0;
   width: 100%;
+
+  height: 100%; /* Permite al ul ocupar toda la altura del sidebar (100vh - 80px) */
+  display: flex; /* Convierte el ul en un contenedor flex */
+  flex-direction: column; /* Coloca los elementos li en columna */
+  padding-bottom: 20px;
+}
+
+.sidebar li.push-bottom {
+    /* Esta propiedad empuja el elemento al final del contenedor flex */
+    margin-top: auto; 
+}
+
+.sidebar ul li ul{ /* Oculta las sublistas por defecto en el sidebar */
+  display: none;
+  position: relative;
+  background-color: #3d3d3d; 
+  min-width: 100%; 
+  padding-left: 0; 
+}
+
+.sidebar ul li:hover ul{ /* Muestra las sublistas al hacer hover en el padre */
+  display: block;
 }
 
 .sidebar li {

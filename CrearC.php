@@ -245,131 +245,151 @@ $conexion->close();
             <?php endif; ?>
         </div>
     </header>
-
-    <nav>
-        <ul> <li><a href ="InicioSesion.php">Inicio de Sesion</a></li>
-            <li><a href ="Pagina.php">Menu Principal</a></li>
-        </ul>
-    </nav>
+    <div class= "layout">
+        <nav class="sidebar">
+            <ul> 
+                <li>
+                    <a href ="InicioSesion.php">Inicio de Sesion</a>
+                </li>
+                <li>
+                    <a href ="Pagina.php">Menu Principal</a>
+                </li>
+            </ul>
+        </nav>
     
-    <main>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" enctype="multipart/form-data" class="Formulario" id="registroForm">
-            
-            <h2><?php echo $esModoEditar ? 'Actualizar mis Datos' : 'Crear Cuenta'; ?></h2>
+        <main>
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" enctype="multipart/form-data" class="Formulario" id="registroForm">
+                
+                <h2><?php echo $esModoEditar ? 'Actualizar mis Datos' : 'Crear Cuenta'; ?></h2>
 
-            <?php if ($esModoEditar && !empty($datosUsuario['Foto'])): ?>
-                <div class="perfil-actual">
-                    <p>Foto de Perfil Actual:</p>
-                    <img src="data:image/jpeg;base64,<?php echo base64_encode($datosUsuario['Foto']); ?>" alt="Foto de perfil" width="100">
-                </div>
+                <?php if ($esModoEditar && !empty($datosUsuario['Foto'])): ?>
+                    <div class="perfil-actual">
+                        <p>Foto de Perfil Actual:</p>
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($datosUsuario['Foto']); ?>" alt="Foto de perfil" width="100">
+                    </div>
+                <?php endif; ?>
+
+                <p>Datos Personales</p>
+                
+                <input type="text" name="Name" placeholder="Ingresa el nombre de usuario..." oninput="soloLetras(this)" 
+                    value="<?php echo htmlspecialchars($datosUsuario['Nombre_Usuario'] ?? ''); ?>" required>
+                
+                <input type="email" name="Mail" placeholder="Ingresa tu correo..."
+                    value="<?php echo htmlspecialchars($datosUsuario['Email'] ?? ''); ?>" required>
+
+                <label for="gender">Selecciona tu género:</label>
+                <select name="gender" id="gender" required>
+                    <option value="" disabled <?php echo empty($datosUsuario['Genero']) ? 'selected' : ''; ?>>-- Selecciona --</option>
+                    <option value="Hombre" <?php echo ($datosUsuario['Genero'] ?? '') === 'Hombre' ? 'selected' : ''; ?>>Hombre</option>
+                    <option value="Mujer" <?php echo ($datosUsuario['Genero'] ?? '') === 'Mujer' ? 'selected' : ''; ?>>Mujer</option>
+                </select>
+
+                <input type="date" name="Birthday" 
+                    value="<?php echo htmlspecialchars($datosUsuario['Fecha_Nacimientro'] ?? ''); ?>" required>
+
+        <div class="password-container">
+            <input type="password" name="Password" id="Password" 
+                placeholder="<?php echo $esModoEditar ? 'Nueva contraseña (dejar en blanco para no cambiar)' : 'Ingresa la contraseña...'; ?>"
+                <?php echo $esModoEditar ? '' : 'required'; ?>>
+            <button type="button" id="togglePassword" class="toggle-btn">
+                <span class="icon-show">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" /><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" /><path d="M3 3l18 18" /></svg>
+                </span>
+                <span class="icon-hide d-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                </span>
+            </button>
+        </div>
+        <div class="password-container">
+            <input type="password" name="PasswordVer" id="PasswordVer" 
+                placeholder="<?php echo $esModoEditar ? 'Verifica la nueva contraseña' : 'Verifica la contraseña...'; ?>"
+                <?php echo $esModoEditar ? '' : 'required'; ?>> 
+            <button type="button" id="togglePasswordVer" class="toggle-btn">
+                <span class="icon-show">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" /><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" /><path d="M3 3l18 18" /></svg>
+                </span>
+                <span class="icon-hide d-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                </span>
+            </button>
+        </div>
+
+                <label for="Archivo">
+                    <?php echo $esModoEditar ? 'Cambiar foto de perfil (opcional):' : 'Sube tu foto de perfil:'; ?>
+                </label>
+                <input type="file" name="Archivo" id="Archivo" 
+                    <?php echo $esModoEditar ? '' : 'required'; ?>>
+                
+                <label for="birth_country">Selecciona tu país de nacimiento:</label>
+                <select name="birth_country" id="birth_country" required>
+                    <option value="" disabled <?php echo empty($datosUsuario['Pais_Nacimiento']) ? 'selected' : ''; ?>>-- Selecciona --</option>
+                    <?php
+                    foreach ($paises as $fila) {
+                        $id_pais = htmlspecialchars($fila['ID_Pais']);
+                        $nombre_pais = htmlspecialchars($fila['Pais']);
+                        $seleccionado = ($datosUsuario['Pais_Nacimiento'] ?? '') == $id_pais ? 'selected' : '';
+                        echo "<option value=\"$id_pais\" $seleccionado>$nombre_pais</option>";
+                    }
+                    ?>
+                </select>
+
+                <label for="nationality">Selecciona tu nacionalidad:</label>
+                <select name="nationality" id="nationality" required>
+                    <option value="" disabled <?php echo empty($datosUsuario['Nacionalidad']) ? 'selected' : ''; ?>>-- Selecciona --</option>
+                    <?php
+                    foreach ($paises as $fila) { // Reutilizamos el array de países
+                        $id_pais = htmlspecialchars($fila['ID_Pais']);
+                        $nombre_pais = htmlspecialchars($fila['Pais']);
+                        $seleccionado = ($datosUsuario['Nacionalidad'] ?? '') == $id_pais ? 'selected' : '';
+                        echo "<option value=\"$id_pais\" $seleccionado>$nombre_pais</option>";
+                    }
+                    ?>
+                </select>
+
+                <button type="submit">
+                    <?php echo $esModoEditar ? 'Guardar Cambios' : 'Registrarte'; ?>
+                </button>
+            </form>
+            
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <?php if (isset($error)) : ?>
+            <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops... Tienes errores:',
+                html: <?= json_encode($error) ?>,
+                confirmButtonColor: '#d33'
+            });
+            </script>
             <?php endif; ?>
 
-            <p>Datos Personales</p>
+            <?php if (isset($_GET['actualizado']) && $_GET['actualizado'] === 'exitoso') : ?>
+            <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Perfil actualizado!',
+                text: 'Tus datos han sido guardados.',
+                confirmButtonColor: '#3085d6'
+            });
+            </script>
+            <?php endif; ?>
             
-            <input type="text" name="Name" placeholder="Ingresa el nombre de usuario..." oninput="soloLetras(this)" 
-                   value="<?php echo htmlspecialchars($datosUsuario['Nombre_Usuario'] ?? ''); ?>" required>
-            
-            <input type="email" name="Mail" placeholder="Ingresa tu correo..."
-                   value="<?php echo htmlspecialchars($datosUsuario['Email'] ?? ''); ?>" required>
-
-            <label for="gender">Selecciona tu género:</label>
-            <select name="gender" id="gender" required>
-                <option value="" disabled <?php echo empty($datosUsuario['Genero']) ? 'selected' : ''; ?>>-- Selecciona --</option>
-                <option value="Hombre" <?php echo ($datosUsuario['Genero'] ?? '') === 'Hombre' ? 'selected' : ''; ?>>Hombre</option>
-                <option value="Mujer" <?php echo ($datosUsuario['Genero'] ?? '') === 'Mujer' ? 'selected' : ''; ?>>Mujer</option>
-            </select>
-
-            <input type="date" name="Birthday" 
-                   value="<?php echo htmlspecialchars($datosUsuario['Fecha_Nacimientro'] ?? ''); ?>" required>
-
-            <div class="password-container">
-                <input type="password" name="Password" id="Password" 
-                       placeholder="<?php echo $esModoEditar ? 'Nueva contraseña (dejar en blanco para no cambiar)' : 'Ingresa la contraseña...'; ?>"
-                       <?php echo $esModoEditar ? '' : 'required'; ?>> <button type="button" id="togglePassword" class="toggle-btn">
-                    </button>
-            </div>
-
-            <div class="password-container">
-                <input type="password" name="PasswordVer" id="PasswordVer" 
-                       placeholder="<?php echo $esModoEditar ? 'Verifica la nueva contraseña' : 'Verifica la contraseña...'; ?>"
-                       <?php echo $esModoEditar ? '' : 'required'; ?>> <button type="button" id="togglePasswordVer" class="toggle-btn">
-                    </button>
-            </div>
-
-            <label for="Archivo">
-                <?php echo $esModoEditar ? 'Cambiar foto de perfil (opcional):' : 'Sube tu foto de perfil:'; ?>
-            </label>
-            <input type="file" name="Archivo" id="Archivo" 
-                   <?php echo $esModoEditar ? '' : 'required'; ?>>
-            
-            <label for="birth_country">Selecciona tu país de nacimiento:</label>
-            <select name="birth_country" id="birth_country" required>
-                <option value="" disabled <?php echo empty($datosUsuario['Pais_Nacimiento']) ? 'selected' : ''; ?>>-- Selecciona --</option>
-                <?php
-                foreach ($paises as $fila) {
-                    $id_pais = htmlspecialchars($fila['ID_Pais']);
-                    $nombre_pais = htmlspecialchars($fila['Pais']);
-                    $seleccionado = ($datosUsuario['Pais_Nacimiento'] ?? '') == $id_pais ? 'selected' : '';
-                    echo "<option value=\"$id_pais\" $seleccionado>$nombre_pais</option>";
-                }
-                ?>
-            </select>
-
-            <label for="nationality">Selecciona tu nacionalidad:</label>
-            <select name="nationality" id="nationality" required>
-                <option value="" disabled <?php echo empty($datosUsuario['Nacionalidad']) ? 'selected' : ''; ?>>-- Selecciona --</option>
-                <?php
-                foreach ($paises as $fila) { // Reutilizamos el array de países
-                    $id_pais = htmlspecialchars($fila['ID_Pais']);
-                    $nombre_pais = htmlspecialchars($fila['Pais']);
-                    $seleccionado = ($datosUsuario['Nacionalidad'] ?? '') == $id_pais ? 'selected' : '';
-                    echo "<option value=\"$id_pais\" $seleccionado>$nombre_pais</option>";
-                }
-                ?>
-            </select>
-
-            <button type="submit">
-                <?php echo $esModoEditar ? 'Guardar Cambios' : 'Registrarte'; ?>
-            </button>
-        </form>
+            <?php if (isset($_GET['registro']) && $_GET['registro'] === 'exitoso') : ?>
+            <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Registro exitoso!',
+                text: 'Tu cuenta ha sido creada. Ahora inicia sesión.',
+                confirmButtonColor: '#3085d6'
+            });
+            </script>
+            <?php endif; ?>
         
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="funcion.js"></script>
 
-        <?php if (isset($error)) : ?>
-        <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops... Tienes errores:',
-            html: <?= json_encode($error) ?>,
-            confirmButtonColor: '#d33'
-        });
-        </script>
-        <?php endif; ?>
-
-        <?php if (isset($_GET['actualizado']) && $_GET['actualizado'] === 'exitoso') : ?>
-        <script>
-        Swal.fire({
-            icon: 'success',
-            title: '¡Perfil actualizado!',
-            text: 'Tus datos han sido guardados.',
-            confirmButtonColor: '#3085d6'
-        });
-        </script>
-        <?php endif; ?>
-        
-        <?php if (isset($_GET['registro']) && $_GET['registro'] === 'exitoso') : ?>
-        <script>
-        Swal.fire({
-            icon: 'success',
-            title: '¡Registro exitoso!',
-            text: 'Tu cuenta ha sido creada. Ahora inicia sesión.',
-            confirmButtonColor: '#3085d6'
-        });
-        </script>
-        <?php endif; ?>
-       
-        <script src="funcion.js"></script>
-    </main>
+        </main>
+    </div>
     <footer>
         <p class="Resaltado">© 2025 Mi Pagina de Mundiales | MiPaginadeMundiales@gmail.com | 815678921</p>
     </footer>

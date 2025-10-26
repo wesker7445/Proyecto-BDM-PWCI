@@ -36,8 +36,7 @@ if (isset($_SESSION['error'])){
         <!-- La imagen ahora apunta a un script PHP que la sirve desde la BD -->
         <img src="MostrarImagen.php" alt="Foto de perfil" height="50" width="50">
         <!-- El nombre se obtiene de la variable de sesión -->
-        <a href="MisPosts.php"><h3><?php echo htmlspecialchars($username_session); ?></h3></a>
-        <a href="Admin.php"><h3>Modo admin</h3></a>
+        <h3><?php echo htmlspecialchars($username_session); ?></h3>
     </div>
     <?php endif; ?>
 </header>
@@ -55,18 +54,31 @@ if (isset($_SESSION['error'])){
             <li> 
                 <a href="#">Categorías</a>
                 <ul>
-                    <li><a href="#">Faltas</a></li>
+                     <li><a href="#">Faltas</a></li>
                     <li><a href="#">Golres</a></li>
                     <li><a href="#">Controversia</a></li>
                     <li><a href="#">Jugadas</a></li>
-                    </ul>
+                </ul>
             </li>
             <?php if ($isLoggedIn): ?>
-            <li><a href="logout.php">Cerrar Sesión</a></li>
-            <li><a href="CrearP.php">Crear Publicación</a></li>
+            <li>
+                <a href="logout.php">Cerrar Sesión</a>
+            </li>
+            <li>
+                <a href="CrearP.php">Crear Publicación</a>
+            </li>
             <?php else: ?>
-            <li><a href="InicioSesion.php">Iniciar Sesión</a></li>
+            <li>
+                <a href="InicioSesion.php">Iniciar Sesión</a>
+            </li>
             <?php endif; ?>
+
+            <li class="push-bottom">
+                <a href="Admin.php">Modo admin</a>
+            </li>      
+            <li>
+                <a href="MisPosts.php">Perfil</a>
+            </li>
         </ul>
     </nav>
 
