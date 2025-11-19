@@ -1,221 +1,220 @@
 <?php
-session_start();
-require_once "Connection.php";
+    session_start();
+    require_once "Connection.php";
+    $isLoggedIn = isset($_SESSION['usuario_id']); 
+    // --- 1. DETERMINAR EL MODO ---
+    $esModoEditar = false;
+    $datosUsuario = [];
+    $id_usuario_actual = null;
+    $error = null; // Variable para SweetAlert
 
-// --- 1. DETERMINAR EL MODO ---
-$esModoEditar = false;
-$datosUsuario = [];
-$id_usuario_actual = null;
-$error = null; // Variable para SweetAlert
-
-// Verifica si el usuario ha iniciado sesión
-if (isset($_SESSION['usuario_id'])) {
-    $esModoEditar = true;
-    $id_usuario_actual = $_SESSION['usuario_id'];
-
-    // Si está en modo editar, busca los datos actuales del usuario
-    // USAMOS ID_Usuario (¡corregido!)ID_Usuario
-    $stmt_datos = $conexion->prepare("SELECT Nombre_Usuario, Foto, Genero, Pais_Nacimiento, Nacionalidad, Fecha_Nacimientro, Email FROM usuarios WHERE ID = ?");
-    $stmt_datos->bind_param("i", $id_usuario_actual);
-    $stmt_datos->execute();
-    $resultado_datos = $stmt_datos->get_result();
-    
-    if ($resultado_datos->num_rows === 1) {
-        $datosUsuario = $resultado_datos->fetch_assoc();
-    } else {
-        // El usuario de la sesión no existe, forzar cierre de sesión
-        session_destroy();
-        header("Location: inicioSesion.php?error=UsuarioNoValido");
-        exit();
-    }
-    $stmt_datos->close();
-}
-
-
-// --- 2. PROCESAR EL FORMULARIO (POST) ---
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // --- ¡CORREGIDO! Recoger TODAS las variables ---
-    $nombre = $_POST["Name"];
-    $correo = $_POST["Mail"];
-    $genero = $_POST["gender"];
-    $fecha_nacimiento = $_POST["Birthday"];
-    $contrasena = $_POST["Password"];
-    $verificacion = $_POST["PasswordVer"];
-    $nacimiento = $_POST["birth_country"];
-    $nacionalidad = $_POST["nationality"];
-
-    $errores = [];
-
-    // --- 3. VALIDACIONES (Lógica modificada para Editar) ---
-
-    // VALIDACIÓN DE CONTRASEÑA
-    if (!empty($contrasena)) {
-        // Si el usuario escribió algo en el campo contraseña (en crear O editar)
-        if (strlen($contrasena) < 8) $errores[] = "⚠️ Contraseña: Mínimo 8 caracteres.";
-        if (!preg_match('/[A-Z]/', $contrasena)) $errores[] = "⚠️ Contraseña: Requiere una mayúscula.";
-        if (!preg_match('/[a-z]/', $contrasena)) $errores[] = "⚠️ Contraseña: Requiere una minúscula.";
-        if (!preg_match('/[0-9]/', $contrasena)) $errores[] = "⚠️ Contraseña: Requiere un número.";
-        if (!preg_match('/[^a-zA-Z0-9]/', $contrasena)) $errores[] = "⚠️ Contraseña: Requiere un símbolo.";
-        if ($contrasena !== $verificacion) $errores[] = "⚠️ Las contraseñas no coinciden.";
-
-    } elseif (!$esModoEditar) {
-        // Si la contraseña está vacía Y estamos en MODO CREAR, es un error
-        $errores[] = "⚠️ Debes ingresar una contraseña.";
-    }
-    // Si la contraseña está vacía Y estamos en MODO EDITAR, no es un error. Simplemente no se actualiza.
-
-    // VALIDACIÓN DE EMAIL
-    // (Tu lógica de email con checkdnsrr es excelente, la dejamos igual)
-    if (empty($correo) || !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        $errores[] = "⚠️ Correo electrónico inválido.";
-    } else {
-        $partes = explode('@', $correo);
-        $dominio = array_pop($partes);
-        if (!checkdnsrr($dominio, "MX")) {
-            $errores[] = "⚠️ El dominio '$dominio' no parece existir.";
-        }
-    }
-
-    // VALIDACIÓN DE ARCHIVO (FOTO)
-    if (isset($_FILES['Archivo']) && $_FILES['Archivo']['error'] === UPLOAD_ERR_OK) {
-        // Si se subió un archivo (en crear O editar), lo validamos
-        $tempFile = $_FILES['Archivo']['tmp_name'];
-        $check = @getimagesize($tempFile);
-        if ($check === false) {
-            $errores[] = "⚠️ El archivo subido no es una imagen.";
-        } else {
-            $allowed_types = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_BMP];
-            if (!in_array($check[2], $allowed_types)) {
-                $errores[] = "⚠️ Solo se aceptan imágenes JPG, PNG o BMP.";
-            }
-        }
-    } elseif (!$esModoEditar) {
-        // Si NO se subió archivo Y estamos en MODO CREAR, es un error
-        $errores[] = "⚠️ Debes subir una foto de perfil.";
-    }
-    // Si NO se subió archivo Y estamos en MODO EDITAR, no es un error. Simplemente no se actualiza.
-
-    // VALIDACIÓN DE EDAD
-    // (Tu lógica de edad es excelente, la dejamos igual)
-    if (empty($fecha_nacimiento)) {
-        $errores[] = "⚠️ Debes ingresar tu fecha de nacimiento.";
-    } else {
-        try {
-            $fecha_nac_obj = new DateTime($fecha_nacimiento);
-            $hoy = new DateTime('today');
-            if ($fecha_nac_obj > $hoy) {
-                $errores[] = "⚠️ No puedes nacer en el futuro.";
-            } else {
-                $edad = $hoy->diff($fecha_nac_obj)->y;
-                if ($edad < 12) $errores[] = "⚠️ Debes ser mayor de 12 años.";
-                if ($edad > 120) $errores[] = "⚠️ Fecha de nacimiento incorrecta.";
-            }
-        } catch (Exception $e) {
-            $errores[] = "⚠️ Formato de fecha de nacimiento no válido.";
-        }
-    }
-
-    // --- 4. BLOQUE DE EJECUCIÓN (INSERT o UPDATE) ---
-    
-    if (empty($errores)) {
+    // Verifica si el usuario ha iniciado sesión
+    if ($isLoggedIn) {
+        $esModoEditar = true;
+        $id_usuario_actual = $_SESSION['usuario_id'];
+        // Si está en modo editar, busca los datos actuales del usuario
+        // USAMOS ID_Usuario (¡corregido!)ID_Usuario
+        $stmt_datos = $conexion->prepare("SELECT Nombre_Usuario, Foto, Genero, Pais_Nacimiento, Nacionalidad, Fecha_Nacimientro, Email FROM usuarios WHERE ID = ?");
+        $stmt_datos->bind_param("i", $id_usuario_actual);
+        $stmt_datos->execute();
+        $resultado_datos = $stmt_datos->get_result();
         
-        if ($esModoEditar) {
-            // --- MODO EDITAR: LÓGICA DE UPDATE ---
-            
-            // Construimos la consulta UPDATE dinámicamente
-            $sql_update = "UPDATE usuarios SET Nombre_Usuario = ?, Email = ?, Genero = ?, Pais_Nacimiento = ?, Nacionalidad = ?, Fecha_Nacimientro = ?";
-            $tipos = "sssiss"; // Tipos de datos para bind_param
-            $parametros = [$nombre, $correo, $genero, $nacimiento, $nacionalidad, $fecha_nacimiento];
+        if ($resultado_datos->num_rows === 1) {
+            $datosUsuario = $resultado_datos->fetch_assoc();
+        } else {
+            // El usuario de la sesión no existe, forzar cierre de sesión
+            session_destroy();
+            header("Location: inicioSesion.php?error=UsuarioNoValido");
+            exit();
+        }
+        $stmt_datos->close();
+    }
 
-            // ¿El usuario quiere cambiar la contraseña?
-            if (!empty($contrasena)) {
-                $hash = password_hash($contrasena, PASSWORD_DEFAULT);
-                $sql_update .= ", Pass = ?";
-                $tipos .= "s";
-                $parametros[] = $hash;
+
+    // --- 2. PROCESAR EL FORMULARIO (POST) ---
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        // --- ¡CORREGIDO! Recoger TODAS las variables ---
+        $nombre = $_POST["Name"];
+        $correo = $_POST["Mail"];
+        $genero = $_POST["gender"];
+        $fecha_nacimiento = $_POST["Birthday"];
+        $contrasena = $_POST["Password"];
+        $verificacion = $_POST["PasswordVer"];
+        $nacimiento = $_POST["birth_country"];
+        $nacionalidad = $_POST["nationality"];
+
+        $errores = [];
+
+        // --- 3. VALIDACIONES (Lógica modificada para Editar) ---
+
+        // VALIDACIÓN DE CONTRASEÑA
+        if (!empty($contrasena)) {
+            // Si el usuario escribió algo en el campo contraseña (en crear O editar)
+            if (strlen($contrasena) < 8) $errores[] = "⚠️ Contraseña: Mínimo 8 caracteres.";
+            if (!preg_match('/[A-Z]/', $contrasena)) $errores[] = "⚠️ Contraseña: Requiere una mayúscula.";
+            if (!preg_match('/[a-z]/', $contrasena)) $errores[] = "⚠️ Contraseña: Requiere una minúscula.";
+            if (!preg_match('/[0-9]/', $contrasena)) $errores[] = "⚠️ Contraseña: Requiere un número.";
+            if (!preg_match('/[^a-zA-Z0-9]/', $contrasena)) $errores[] = "⚠️ Contraseña: Requiere un símbolo.";
+            if ($contrasena !== $verificacion) $errores[] = "⚠️ Las contraseñas no coinciden.";
+
+        } elseif (!$esModoEditar) {
+            // Si la contraseña está vacía Y estamos en MODO CREAR, es un error
+            $errores[] = "⚠️ Debes ingresar una contraseña.";
+        }
+        // Si la contraseña está vacía Y estamos en MODO EDITAR, no es un error. Simplemente no se actualiza.
+
+        // VALIDACIÓN DE EMAIL
+        // (Tu lógica de email con checkdnsrr es excelente, la dejamos igual)
+        if (empty($correo) || !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+            $errores[] = "⚠️ Correo electrónico inválido.";
+        } else {
+            $partes = explode('@', $correo);
+            $dominio = array_pop($partes);
+            if (!checkdnsrr($dominio, "MX")) {
+                $errores[] = "⚠️ El dominio '$dominio' no parece existir.";
             }
-            
-            // ¿El usuario quiere cambiar la foto?
-            $archivo = null;
-            if (isset($_FILES['Archivo']) && $_FILES['Archivo']['error'] === UPLOAD_ERR_OK) {
-                $archivo = file_get_contents($_FILES['Archivo']['tmp_name']);
-                $sql_update .= ", Foto = ?";
-                $tipos .= "b"; // Tipo 'b' para BLOB
-                $parametros[] = $archivo;
+        }
+
+        // VALIDACIÓN DE ARCHIVO (FOTO)
+        if (isset($_FILES['Archivo']) && $_FILES['Archivo']['error'] === UPLOAD_ERR_OK) {
+            // Si se subió un archivo (en crear O editar), lo validamos
+            $tempFile = $_FILES['Archivo']['tmp_name'];
+            $check = @getimagesize($tempFile);
+            if ($check === false) {
+                $errores[] = "⚠️ El archivo subido no es una imagen.";
+            } else {
+                $allowed_types = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_BMP];
+                if (!in_array($check[2], $allowed_types)) {
+                    $errores[] = "⚠️ Solo se aceptan imágenes JPG, PNG o BMP.";
+                }
             }
+        } elseif (!$esModoEditar) {
+            // Si NO se subió archivo Y estamos en MODO CREAR, es un error
+            $errores[] = "⚠️ Debes subir una foto de perfil.";
+        }
+        // Si NO se subió archivo Y estamos en MODO EDITAR, no es un error. Simplemente no se actualiza.
+
+        // VALIDACIÓN DE EDAD
+        // (Tu lógica de edad es excelente, la dejamos igual)
+        if (empty($fecha_nacimiento)) {
+            $errores[] = "⚠️ Debes ingresar tu fecha de nacimiento.";
+        } else {
+            try {
+                $fecha_nac_obj = new DateTime($fecha_nacimiento);
+                $hoy = new DateTime('today');
+                if ($fecha_nac_obj > $hoy) {
+                    $errores[] = "⚠️ No puedes nacer en el futuro.";
+                } else {
+                    $edad = $hoy->diff($fecha_nac_obj)->y;
+                    if ($edad < 12) $errores[] = "⚠️ Debes ser mayor de 12 años.";
+                    if ($edad > 120) $errores[] = "⚠️ Fecha de nacimiento incorrecta.";
+                }
+            } catch (Exception $e) {
+                $errores[] = "⚠️ Formato de fecha de nacimiento no válido.";
+            }
+        }
+
+        // --- 4. BLOQUE DE EJECUCIÓN (INSERT o UPDATE) ---
+        
+        if (empty($errores)) {
             
-            // Añadimos el WHERE
-            $sql_update .= " WHERE ID = ?";
-            $tipos .= "i";
-            $parametros[] = $id_usuario_actual;
-            
-            $stmt = $conexion->prepare($sql_update);
-            $stmt->bind_param($tipos, ...$parametros); // El '...' expande el array
-            
-            // Si hay un archivo, enviarlo con send_long_data
-            if ($archivo !== null) {
-                // El índice del BLOB es el (total de '?') - 2 (porque el ID es el último)
-                $blob_index = substr_count($sql_update, "?") - (strpos($sql_update, "Pass = ?") ? 2 : 1);
-                if (strpos($sql_update, "Pass = ?") === false) $blob_index = 6;
-                else $blob_index = 7;
+            if ($esModoEditar) {
+                // --- MODO EDITAR: LÓGICA DE UPDATE ---
                 
-                $blob_index = array_search($archivo, $parametros); // Forma más simple
-                $stmt->send_long_data($blob_index, $archivo);
-            }
+                // Construimos la consulta UPDATE dinámicamente
+                $sql_update = "UPDATE usuarios SET Nombre_Usuario = ?, Email = ?, Genero = ?, Pais_Nacimiento = ?, Nacionalidad = ?, Fecha_Nacimientro = ?";
+                $tipos = "sssiss"; // Tipos de datos para bind_param
+                $parametros = [$nombre, $correo, $genero, $nacimiento, $nacionalidad, $fecha_nacimiento];
 
-            if ($stmt->execute()) {
-                // ¡Éxito! Redirige a esta misma página con un mensaje
-                header("Location: CrearC.php?actualizado=exitoso");
-                exit();
+                // ¿El usuario quiere cambiar la contraseña?
+                if (!empty($contrasena)) {
+                    $hash = password_hash($contrasena, PASSWORD_DEFAULT);
+                    $sql_update .= ", Pass = ?";
+                    $tipos .= "s";
+                    $parametros[] = $hash;
+                }
+                
+                // ¿El usuario quiere cambiar la foto?
+                $archivo = null;
+                if (isset($_FILES['Archivo']) && $_FILES['Archivo']['error'] === UPLOAD_ERR_OK) {
+                    $archivo = file_get_contents($_FILES['Archivo']['tmp_name']);
+                    $sql_update .= ", Foto = ?";
+                    $tipos .= "b"; // Tipo 'b' para BLOB
+                    $parametros[] = $archivo;
+                }
+                
+                // Añadimos el WHERE
+                $sql_update .= " WHERE ID = ?";
+                $tipos .= "i";
+                $parametros[] = $id_usuario_actual;
+                
+                $stmt = $conexion->prepare($sql_update);
+                $stmt->bind_param($tipos, ...$parametros); // El '...' expande el array
+                
+                // Si hay un archivo, enviarlo con send_long_data
+                if ($archivo !== null) {
+                    // El índice del BLOB es el (total de '?') - 2 (porque el ID es el último)
+                    $blob_index = substr_count($sql_update, "?") - (strpos($sql_update, "Pass = ?") ? 2 : 1);
+                    if (strpos($sql_update, "Pass = ?") === false) $blob_index = 6;
+                    else $blob_index = 7;
+                    
+                    $blob_index = array_search($archivo, $parametros); // Forma más simple
+                    $stmt->send_long_data($blob_index, $archivo);
+                }
+
+                if ($stmt->execute()) {
+                    // ¡Éxito! Redirige a esta misma página con un mensaje
+                    header("Location: CrearC.php?actualizado=exitoso");
+                    exit();
+                } else {
+                    $error = "❌ Error al actualizar: " . $stmt->error;
+                }
+
             } else {
-                $error = "❌ Error al actualizar: " . $stmt->error;
+                // --- MODO CREAR: LÓGICA DE INSERT (La que ya tenías) ---
+                
+                $hash = password_hash($contrasena, PASSWORD_DEFAULT);
+                $archivo = file_get_contents($_FILES['Archivo']['tmp_name']);
+                
+                $sql_insert = "INSERT INTO usuarios (Nombre_Usuario, Foto, Genero, Pais_Nacimiento, Nacionalidad, Fecha_Nacimientro, Email, Pass) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $conexion->prepare($sql_insert);
+                
+                $placeholder = NULL;
+                $stmt->bind_param("sbsiisss", $nombre, $placeholder, $genero, $nacimiento, $nacionalidad, $fecha_nacimiento, $correo, $hash);
+                $stmt->send_long_data(1, $archivo);
+                
+                if ($stmt->execute()) {
+                    header("Location: inicioSesion.php?registro=exitoso");
+                    exit();
+                } else {
+                    $error = "❌ Error al registrar: " . $stmt->error;
+                }
             }
-
+            $stmt->close();
+            
         } else {
-            // --- MODO CREAR: LÓGICA DE INSERT (La que ya tenías) ---
-            
-            $hash = password_hash($contrasena, PASSWORD_DEFAULT);
-            $archivo = file_get_contents($_FILES['Archivo']['tmp_name']);
-            
-            $sql_insert = "INSERT INTO usuarios (Nombre_Usuario, Foto, Genero, Pais_Nacimiento, Nacionalidad, Fecha_Nacimientro, Email, Pass) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $conexion->prepare($sql_insert);
-            
-            $placeholder = NULL;
-            $stmt->bind_param("sbsiisss", $nombre, $placeholder, $genero, $nacimiento, $nacionalidad, $fecha_nacimiento, $correo, $hash);
-            $stmt->send_long_data(1, $archivo);
-            
-            if ($stmt->execute()) {
-                header("Location: inicioSesion.php?registro=exitoso");
-                exit();
-            } else {
-                $error = "❌ Error al registrar: " . $stmt->error;
-            }
+            // Si hay errores de validación
+            $error = implode("<br>", $errores);
         }
-        $stmt->close();
-        
+    } // Fin del if ($_SERVER["REQUEST_METHOD"] == "POST")
+
+
+    // --- 5. CONSULTA DE PAÍSES (Para el HTML) ---
+    $sql_paises = "SELECT ID_Pais, Pais FROM pais ORDER BY Pais ASC";
+    $resultado_paises = $conexion->query($sql_paises);
+    $paises = []; // Guardamos los países en un array para usarlos dos veces
+
+    if ($resultado_paises && $resultado_paises->num_rows > 0) {
+        while ($fila = $resultado_paises->fetch_assoc()) {
+            $paises[] = $fila; // Almacena cada fila
+        }
     } else {
-        // Si hay errores de validación
-        $error = implode("<br>", $errores);
+        // Si falla la consulta de países, es un error grave para el formulario
+        $error = "Error al cargar la lista de países.";
     }
-} // Fin del if ($_SERVER["REQUEST_METHOD"] == "POST")
 
-
-// --- 5. CONSULTA DE PAÍSES (Para el HTML) ---
-$sql_paises = "SELECT ID_Pais, Pais FROM pais ORDER BY Pais ASC";
-$resultado_paises = $conexion->query($sql_paises);
-$paises = []; // Guardamos los países en un array para usarlos dos veces
-
-if ($resultado_paises && $resultado_paises->num_rows > 0) {
-    while ($fila = $resultado_paises->fetch_assoc()) {
-        $paises[] = $fila; // Almacena cada fila
-    }
-} else {
-    // Si falla la consulta de países, es un error grave para el formulario
-    $error = "Error al cargar la lista de países.";
-}
-
-$conexion->close();
+    $conexion->close();
 ?>
 
 <!DOCTYPE html>
@@ -225,6 +224,7 @@ $conexion->close();
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title><?php echo $esModoEditar ? 'Editar Perfil' : 'Crear Cuenta'; ?></title>
             <link rel="stylesheet" href="style.css">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
         </head>
     <body class="<?php echo $esModoEditar ? 'modo-editar' : 'modo-crear'; ?>">
     <header>
@@ -234,25 +234,35 @@ $conexion->close();
         </h1>
 
         <div class="user">
-            <?php if ($esModoEditar && isset($datosUsuario['Foto'])): ?>
-                <img src="data:image/jpeg;base64,<?php echo base64_encode($datosUsuario['Foto']); ?>" alt="Foto de perfil" width="40" height="40">
+            <?php if ($isLoggedIn): ?>
+                <?php if (!empty($datosUsuario['Foto'])): ?>
+                    <img src="data:image/jpeg;base64,<?php echo base64_encode($datosUsuario['Foto']); ?>" width="40" height="40">
+                <?php endif; ?>
+
                 <h3><?php echo htmlspecialchars($datosUsuario['Nombre_Usuario']); ?></h3>
-            
+
             <?php else: ?>
                 <a href="InicioSesion.php">
                     <h3>Iniciar Sesión</h3>
                 </a>
             <?php endif; ?>
         </div>
+
     </header>
     <div class= "layout">
         <nav class="sidebar">
             <ul> 
+                <?php if ($isLoggedIn): ?>
+                    <li>
+                        <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
+                    </li>
+                <?php else: ?>
+                    <li>
+                        <a href="InicioSesion.php">Iniciar Sesión</a>
+                    </li>
+                <?php endif; ?>
                 <li>
-                    <a href ="InicioSesion.php">Inicio de Sesion</a>
-                </li>
-                <li>
-                    <a href ="Pagina.php">Menu Principal</a>
+                    <a href="Pagina.php"><i class="fas fa-home"></i><span>Ir al Inicio</span></a>
                 </li>
             </ul>
         </nav>
@@ -337,7 +347,7 @@ $conexion->close();
                 <select name="nationality" id="nationality" required>
                     <option value="" disabled <?php echo empty($datosUsuario['Nacionalidad']) ? 'selected' : ''; ?>>-- Selecciona --</option>
                     <?php
-                    foreach ($paises as $fila) { // Reutilizamos el array de países
+                    foreach ($paises as $fila) { 
                         $id_pais = htmlspecialchars($fila['ID_Pais']);
                         $nombre_pais = htmlspecialchars($fila['Pais']);
                         $seleccionado = ($datosUsuario['Nacionalidad'] ?? '') == $id_pais ? 'selected' : '';

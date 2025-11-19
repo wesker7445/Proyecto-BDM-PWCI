@@ -1,28 +1,46 @@
 <?php
 session_start();
+require_once "Connection.php";
 
-// Verificar si el usuario está logueado
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+$sql = "";
+$param_type = "";
+$param_value = null;
+
+// --- LÓGICA MEJORADA ---
+
+// 1. Prioridad: Si se pasa un ID por URL (para los comentarios), usarlo.
+if (isset($_GET['id_usuario']) && is_numeric($_GET['id_usuario'])) {
     
+    // Usamos el ID de la URL
+    $sql = "SELECT Foto FROM usuarios WHERE ID = ?";
+    $param_type = "i";
+    $param_value = intval($_GET['id_usuario']);
+
+// 2. Fallback: Si no hay ID en URL, usar la lógica original (para el header)
+} elseif (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && isset($_SESSION['username'])) {
+    
+    // Usamos el Nombre_Usuario de la sesión
+    $sql = "SELECT Foto FROM usuarios WHERE Nombre_Usuario = ?";
+    $param_type = "s";
+    $param_value = $_SESSION['username'];
+
+// 3. Si no hay ni GET id ni sesión, no se puede mostrar nada.
+} else {
+    // No hay usuario que buscar.
+    // Opcional: podrías mostrar una imagen por defecto aquí.
     header("HTTP/1.1 403 Forbidden");
     exit;
 }
 
-require_once "Connection.php";
+// --- EJECUCIÓN DE CONSULTA ---
 
-
-// Obtener el nombre de usuario de la sesión
-$username = $_SESSION['username'];
-
-// ATENCIÓN: Cambia 'foto_perfil' por el nombre real de tu columna LONGBLOB
-$sql = "SELECT Foto FROM usuarios WHERE Nombre_Usuario = ?";
 $stmt = $conexion->prepare($sql);
 
 if ($stmt === false) {
     die("Error al preparar la consulta: " . $conexion->error);
 }
 
-$stmt->bind_param("s", $username);
+$stmt->bind_param($param_type, $param_value);
 $stmt->execute();
 $resultado = $stmt->get_result();
 
@@ -31,15 +49,16 @@ if ($resultado->num_rows === 1) {
     $imagen_blob = $fila['Foto'];
 
     if (!empty($imagen_blob)) {
-        // Enviar la cabecera de tipo de contenido. 
-        // Esto asume que guardas imágenes JPEG. Si usas PNG, cambia a "image/png"
+        // Enviar la cabecera de tipo de contenido (asumiendo JPEG)
         header("Content-Type: image/jpg"); 
         echo $imagen_blob;
     } else {
-        // Opcional: Si el usuario no tiene imagen, muestra una por defecto.
-        // Asegúrate de que esta imagen exista en tu proyecto.
+        // Opcional: Mostrar imagen por defecto si el BLOB está vacío
         // readfile('imagenes/default-avatar.png');
     }
+} else {
+     // Opcional: Mostrar imagen por defecto si el usuario no se encuentra
+     // readfile('imagenes/default-avatar.png');
 }
 
 $stmt->close();

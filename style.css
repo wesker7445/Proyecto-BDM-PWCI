@@ -1,21 +1,51 @@
+*{
+   box-sizing: border-box;
+}
+
 body {
-   background-color: rgb(44, 44, 44);
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    
-    /* --- ¡AÑADIDO! --- */
-    /* Dejamos 80px de espacio arriba para el header */
-    padding-top: 80px; 
-    /* Dejamos 220px de espacio a la izquierda para la sidebar */
-    padding-left: 220px; 
-    box-sizing: border-box; /* Buena práctica */
-    
-    /* Ya no necesitamos grid aquí, los elementos fijos lo manejan */
+  background-color: rgb(44, 44, 44);
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding-top: 80px; 
+}
+
+/* --- NUEVA CLASE PARA PÁGINAS SIN BARRA LATERAL (EJEMPLO: Inicio de Sesión) --- */
+
+/* 1. Redefinir el Layout principal */
+.full-screen-layout .layout {
+    display: block; /* Desactiva el flexbox para que main y footer no estén a un lado del sidebar */
+}
+
+/* 2. Redefinir MAIN para que ocupe todo el espacio y centre el formulario */
+.full-screen-layout main {
+    width: 100vw; /* Ocupa el 100% del ancho del viewport */
+    min-height: calc(100vh - 80px); /* Ocupa el 100% del alto menos el header */
+    margin-left: 0; /* Elimina el margen izquierdo que deja espacio para el sidebar */
+    padding: 0; /* Elimina el padding de main, ya que el formulario tiene su propio margen */
+    display: flex; /* Asegura el centrado del formulario */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* 3. Ajustar el FOOTE Rpara que ocupe el 100% del ancho */
+.full-screen-layout footer {
+    width: 100%;
+    margin-left: 0;
+}
+
+/* 4. Ajustar el contenedor del formulario */
+.full-screen-layout .Formulario {
+    /* El margen superior e inferior lo vamos a dejar automático para centrarlo */
+    margin: auto 0; /* Centrado vertical dentro del main */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); /* Opcional: una sombra para que resalte */
 }
 
 a{
   text-decoration: none;
 }
+
+
 
 header{
   display: flex;
@@ -29,7 +59,7 @@ header{
   left: 0;          /* Asegura que empieza a la izquierda */
   width: 100%;      /* Asegura que ocupe todo el ancho */
   z-index: 1001;
-  box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
+
 }
 
 header h1 {
@@ -212,7 +242,9 @@ nav ul li.container{
 }
 
 .sidebar a {
-  display: block;
+  display: flex; /* CAMBIO CLAVE: Permite usar flexbox */
+  align-items: center; /* Centra el ícono y el texto verticalmente */
+  gap: 10px; /* AÑADIDO: Espacio de 10px entre el ícono y el texto */
   padding: 15px 20px;
   color: #fff;
   font-weight: bold;
@@ -231,25 +263,52 @@ nav ul li.container{
     box-sizing: border-box; /* Incluye el padding en el cálculo del ancho */
 }
 
-/* El contenido principal se corre a la derecha */
+
 main {
-  padding: 40px;
-  flex: 1;
-  display: grid;
-  justify-content: center;  
-  align-items: center;  
-  min-height: calc(100vh - 120px); 
+  width: calc(100% - 220px);
+  margin-left: 220px;
+  padding: 0 20px 20px 20px;         
+  display: flex;        
+  justify-content: center; 
+  flex-direction: column;  
+  align-items: center;
+  
+  min-height: calc(100vh - 80px - 58px);
+
 }
 
+main .publicacion {
+    background-color: #2a2a2a; /* Un fondo oscuro (ajusta al de tu tema) */
+    padding: 25px;
+    border-radius: 8px;       /* Bordes redondeados */
+    border: 1px solid #444;   /* Un borde sutil */
+    margin-bottom: 20px;      /* <-- Esta es la clave: crea 20px de separación */
+}
+
+main .publicaciones-feed {
+    background-color: #2a2a2a; /* Mismo fondo para consistencia */
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #444;
+}
+
+main .publicaciones-feed h2 {
+    margin-top: 0; 
+}
+
+main .publicaciones-feed h4 {
+  text-align: center;
+}
 
 .publicacion{
   background-color: #333;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 40px auto;
   border-radius: 15px;
   padding: 40px 50px;
   color: #e0e0e0;
   line-height: 1.7;
+  
 }
 
 main.publicacion article {
@@ -260,12 +319,21 @@ main.publicacion article {
   padding: 30px;
   color: #e0e0e0;
   margin-bottom: 40px;
+  
 }
 
 .publicacion h1{
   text-align: center;
   font-weight: bold;
   font-size: 2.5em; 
+  margin-bottom: 20px; 
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.publicacion h2{
+  text-align: center;
+  font-size: 1.75em; 
   margin-bottom: 20px; 
   line-height: 1.2;
   color: #ffffff;
@@ -362,84 +430,270 @@ main.publicacion article {
   animation: rotacion 1s ease-in-out;
 }
 
+.admin-content {
+    max-width: 1000px;
+    margin: 40px auto; 
+    padding: 40px 50px;
+    background-color: #333;
+    border-radius: 15px;
+    color: #e0e0e0;
+}
 
-.container form{
+.admin-content h1 {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    /* Esto agrega el espacio que falta abajo: */
+    margin-bottom: 30px; 
+    /* Y le añade una línea separadora: */
+    border-bottom: 2px solid #6cd085;
+    padding-bottom: 15px;
+}
+
+
+.publicacion-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #474747;     /* <--- Fondo oscuro */
+    border-radius: 15px;           /* <--- Bordes más redondeados */
+    padding: 30px;
+    color: #e0e0e0;
+    line-height: 1.7;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    border: 1px solid #ddd;        /* <--- El borde claro que querías */
+
+    /* --- Estilos que ya tenías y son importantes --- */
+    margin-bottom: 40px; 
+    box-sizing: border-box;
+    max-width: 100%; /* Asegura que no se desborde en el contenedor */
+}
+
+.publicacion-card p{
+  text-align: justify;
+  font-size: 1.1em;
+
+}
+
+.publicacion-card h2 {
+    color: #ffffff;
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center; /* Título alineado a la izquierda */
+    border-bottom: 2px solid #6cd085; /* Separador bajo el título */
+    padding-bottom: 10px;
+    font-weight: 600;
+}
+
+.publicacion-card .info {
+    display: flex; /* Permite que los spans se pongan uno al lado del otro */
+    gap: 20px;
+    color: #aaa;
+    font-size: 0.95em;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Para que se ajusten en pantallas pequeñas */
+    text-align: center;
+    justify-content: center;
+}
+
+.publicacion-card .info strong {
+    color: #e0e0e0; /* Resaltar los valores */
+    font-weight: 500;
+}
+
+.multimedia-container {
+    /* Aquí definimos el ancho para que cubra el espacio del texto */
+    max-width: 100%;
+    margin: 25px 0;
+    text-align: center;
+}
+
+.multimedia-container video, 
+.multimedia-container img {
+    /* **RESPUESTA A TU PREGUNTA DE CUBRIR ESPACIO** */
+    /* Cubre el ancho completo del contenedor (800px) */
+    width: 100%; 
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+    border: 2px solid #555;
+    /* Ajuste para que la imagen no se recorte de forma extraña si es muy grande */
+    object-fit: contain; 
+}
+
+.publicacion-card .acciones {
   display: flex;
-  gap: 5px;
-  align-items: center;
-  margin: 0;
-  border: transparent;
-  width: 100%;
+  gap: 15px;
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid #555;
+  width: 100%; /* <-- ¡Añade esto si no está! */
 }
 
-.container input[type="text"]{
-  border: none;
-  outline: none;
-  background-color: transparent;
-  color: white;
-  padding: 5px 10px;
-  flex-grow: 1;
-  box-sizing: border-box;
+.publicacion-card .acciones button {
+    /* Estilo base para botones de acción */
+    background-color: #555555;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.container input::placeholder{
-  color: rgb(216, 216, 216);
-  font-weight: bold;
+.publicacion-card .acciones button:hover {
+    background-color: #6cd085; /* Tu color verde */
 }
 
-.container button{
-  border: none;
-  outline: none;
-  background-color: transparent;
+.publicacion-card .acciones svg {
+    width: 20px;
+    height: 20px;
 }
 
-.container svg{
-  transition: transform 0.5s ease-in-out;
+/* El formulario que contiene el botón debe crecer */
+.publicacion-card .acciones .btn-form {
+    flex-grow: 1; /* Esto hace que el formulario ocupe el 100% del espacio */
+    width: 100%;
 }
 
-.container svg:hover{
-  transform: scale(1.2);
+/* El botón dentro del formulario debe ocupar el 100% de su padre */
+.publicacion-card .acciones button {
+    width: 100%; /* Asegura que el botón llene el formulario */
+    justify-content: center; /* Centra el texto y el ícono dentro del botón */
+    transition: all 0.3s ease; /* Transición más general */
 }
 
-/* --- NUEVOS ESTILOS PARA LA CAJA DE BÚSQUEDA --- */
-.search-box {
+/* Estilos de color específicos para los nuevos botones */
+.publicacion-card .acciones .btn-aprobar {
+    background-color: #6cd085; /* Verde */
+    color: #000;
+}
+
+.publicacion-card .acciones .btn-aprobar:hover {
+    background-color: #55a86e; /* Verde oscuro al pasar el ratón */
+    transform: scale(1.02);
+}
+
+.publicacion-card .acciones .btn-like,
+.publicacion-card .acciones .btn-comentar {
+    background-color: #555555;
+    color: white;
+    padding: 10px 20px;
+    border: none; /* Añadido por si acaso */
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra el contenido */
+    gap: 8px; /* Espacio entre ícono y texto */
+    
+    flex-grow: 1; /* Hace que ambos botones ocupen 50% */
+    width: 50%; /* Asegura que se repartan el espacio */
+    text-decoration: none; /* Para el <a> */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Asegura la fuente */
+    font-size: 15px; /* Asegura el tamaño */
+}
+
+/* Hover para el botón de Like */
+.publicacion-card .acciones .btn-like:hover {
+    background-color: #f44336; /* Rojo para Like */
+}
+
+/* Hover para el botón de Comentar */
+.publicacion-card .acciones .btn-comentar:hover {
+    background-color: #6cd085; /* Tu color verde */
+    color: #000;
+}
+
+
+/* Estilo para el mensaje de No hay publicaciones */
+main p {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #9d9d9d;
+}
+
+
+/* Barra de búsqueda "flotante" en el área principal */
+.main-search-container {
+    width: 100%;
+    max-width: 700px; 
+    margin-bottom: 20px;
+    position: sticky;
+    top: 80px;
+    z-index: 900;
+    padding-top: 20px;
+}
+
+/* Re-estilamos .search-box para este nuevo contexto */
+.main-search-container .search-box {
     display: flex;
     align-items: center;
     width: 100%;
     position: relative;
-    background-color: #555555; 
-    border-radius: 15px;    
+    background-color: #333; /* Color de las tarjetas */
+    border-radius: 20px;    
+    border: 1px solid #555;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Efecto "flotante" */
 }
 
-/* Asegura que el input llene la caja, manteniendo el padding */
-.search-box input[type="text"] {
+.main-search-container .search-box input[type="text"] {
     flex-grow: 1;
-    /* Usa padding a la derecha para hacer espacio para el botón */
-    padding-right: 35px; 
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: white;
+    padding: 12px 20px; /* Hacemos la barra un poco más alta */
+    font-size: 1em;
+    font-weight: 500;
 }
 
-/* Posiciona el botón dentro del área visual del campo de entrada */
-.search-box button {
-    position: absolute; /* Lo saca del flujo normal */
-    right: 8px; /* Lo posiciona en el lado derecho */
-    background-color: transparent; /* Hace que el botón en sí sea transparente */
+.main-search-container .search-box input::placeholder {
+    color: #aaa;
+    font-weight: normal;
+}
+
+.main-search-container .search-box button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
     border: none;
     cursor: pointer;
     padding: 5px;
 }
 
+.main-search-container .search-box button svg {
+    stroke: #ffffff; /* Aseguramos que el icono sea blanco */
+}
+
+
 footer{
-  margin: 0;
-  padding: 1px;
-  overflow: hidden;
-  background-color: rgb(34, 34, 34);
-  text-align: center;
+    margin: 0;
+    padding: 1px;
+    overflow: hidden;
+    background-color: rgb(34, 34, 34);
+    align-items: center;
+    width: calc(100% - 220px);
+    margin-left: 220px;
   }
 
   .Resaltado{
     color:rgb(216, 216, 216);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-weight: bold;
+    text-align: center;
+
   }
 
   .main-stacked {
@@ -452,11 +706,19 @@ footer{
   flex-direction: column;  
   gap: 10px;
   background-color: #0f0f0f;
-  padding: 20px;
   border-radius: 10px;
-  max-width: 400px;
   width: 100%;
   margin-bottom: 40px;
+  margin-left: auto; 
+  margin-right: auto;
+  margin: 0;
+
+  border: 1px solid #474747; /* Opcional: un borde */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Opcional: una sombra */
+
+  background-color: #333; /* Usar el color oscuro que se veía en la captura de pantalla */
+  padding: 40px 50px;     /* Aumentar el padding interno */
+  max-width: 600px;
 }
 
 .Formulario input, .Formulario select, .Formulario button, textarea{
@@ -712,12 +974,15 @@ input[type="file"]::file-selector-button {
   margin-bottom: 15px;
   border-bottom: 1px solid #555;
   padding-bottom: 10px;
+  text-align: center;
 }
+
 
 .post p {
   font-size: 1.1em;
   margin: 0;
   line-height: 1.6;
+  text-align: justify;
 }
 
 /*----------------------------------------*/
@@ -726,13 +991,16 @@ input[type="file"]::file-selector-button {
 .post-preview {
   display: flex;
   flex-direction: column;
-  background-color: #272727;
+  background-color: #414141;
   margin-bottom: 30px;
   border-radius: 15px;
   padding: 30px;
   color: #e0e0e0;
   line-height: 1.7;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  overflow: hidden;
+  border: 1px solid #ddd;
 }
 
 .post-preview:hover {
@@ -765,6 +1033,133 @@ input[type="file"]::file-selector-button {
   text-align: justify;
 }
 
+.post-image-container {
+    flex-basis: 100px;
+    flex-shrink: 0; 
+    height: auto; 
+    text-align: center;
+}
+
+/* Estilos para el contenedor de la imagen */
+.post-image-container img {
+    width: 75%;
+    height: auto;
+    display: block;
+    border-radius: 8px; /* Opcional: para redondear las esquinas */
+    margin-left: auto;
+    margin-right: auto;
+  /* O simplemente: */
+}
+
+/* --- ESTILO PARA LA VISTA DE UN SOLO MUNDIAL (Publicaciones.php) --- */
+
+.post-full {
+    background-color: #474747;     /* <-- Color de fondo de .publicacion-card */
+    max-width: 900px;
+    margin: 40px auto;             /* Mantiene el espaciado */
+    border-radius: 15px;           /* <-- Radio de borde de .publicacion-card */
+    padding: 30px;
+    color: #e0e0e0;
+    line-height: 1.6;
+    
+    /* Borde claro de .publicacion-card */
+    border: 1px solid #ddd;        /* <-- ¡Este es el borde claro que querías! */
+    
+    /* Sombra eliminada para un aspecto más plano, igual que las tarjetas */
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); */ 
+    
+    text-align: center;
+}
+
+
+/* Título (Nombre del Torneo y Año) */
+.post-full h2 {
+    color: #ffffff; /* Blanco para el título principal */
+    font-size: 2.2em;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+    text-align: left;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #6cd085; /* Divisor con color de acento */
+    text-align: center;
+}
+
+/* Información secundaria (Sede y Creador) */
+.post-info-full {
+    color: #aaa;
+    font-size: 1em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.post-info-full strong {
+    color: #e0e0e0; /* El valor en sí (país, usuario) que resalte */
+}
+
+.full-content {
+    margin-top: 20px;
+    line-height: 1.7;
+}
+
+.full-content p {
+    font-size: 1.1em;
+    color: #e0e0e0;
+    text-align: justify;
+    margin-top: 20px;
+}
+
+.post-image-full-container {
+    margin: 25px 0;
+    text-align: center;
+}
+
+.post-image-full-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+    border: 2px solid #555;
+}
+
+.preview-content {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 15px; 
+    flex-direction: column-reverse;
+}
+/* Hace que el párrafo ocupe el espacio restante */
+.preview-content p {
+    flex: 1; /* El párrafo crece para llenar el espacio */
+    margin-top: 0; /* Quita el margen superior del párrafo */
+}
+
+.imagen-actual {
+    text-align: center; 
+    margin-bottom: 10px;
+    
+}
+
+.tarjetas-mundial {
+    /* Define un ancho máximo para que no ocupe toda la pantalla */
+    max-width: 1000px; 
+    
+    /* Asegura que ocupe todo el ancho disponible dentro de ese máximo */
+    width: 100%; 
+    
+    /* Elimina cualquier margen lateral fijo; el main ya lo centrará */
+    margin: 0; 
+    
+    /* Añade algo de padding si lo necesitas */
+    padding: 20px;
+    
+    /* Asegura que las tarjetas se apilen correctamente */
+    display: flex;
+    flex-direction: column; 
+    
+    /* El flexbox del main centrará este contenedor horizontalmente. */
+}
 
 /*Admin*/
 
@@ -891,6 +1286,70 @@ input[type="file"]::file-selector-button {
     display: none;
 }
 
+/* --- Estilos para Tabla de Gestión (Admin) --- */
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse; /* Bordes limpios */
+  margin-top: 25px;
+  background-color: #444; /* Fondo de celda oscuro */
+  border-radius: 8px; /* Bordes redondeados para la tabla */
+  overflow: hidden; /* Asegura que el radius se aplique a las esquinas */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.admin-table th, 
+.admin-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #555; /* Borde sutil entre filas */
+  text-align: left;
+  color: #e0e0e0;
+  vertical-align: middle; /* Centra verticalmente el contenido */
+}
+
+.admin-table th {
+  background-color: #6cd085; /* Cabecera con color de acento */
+  color: #000;
+  font-weight: bold;
+  font-size: 1.1em;
+  text-align: center;
+}
+
+/* Rayas de cebra para mejor legibilidad */
+.admin-table tr:nth-child(even) {
+  background-color: #3d3d3d; 
+}
+
+.admin-table tr:hover {
+  background-color: #5a5a5a; /* Resaltado al pasar el ratón */
+}
+
+/* Celda de acciones */
+.admin-table .actions-cell {
+  text-align: center;
+  width: 130px; /* Ancho fijo para el botón */
+}
+
+/* Celda del comentario */
+.admin-table .comment-text {
+  max-width: 400px; /* Evita que el comentario ocupe demasiado */
+  line-height: 1.4;
+  word-wrap: break-word; /* Rompe palabras largas */
+  text-align: justify;
+}
+
+/* Ajuste para que el botón de eliminar ocupe todo el ancho de su celda */
+.admin-table .btn-noadmitir {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    box-shadow: none;
+    border: none;
+}
+
+
+
+
 /* --- ESTILOS DE PERFIL --- */
 
 /* Estilo para la foto de perfil actual que aparece en modo editar */
@@ -950,21 +1409,7 @@ body.modo-editar .Formulario h2 {
     color: #3085d6; /* Azul */
 }
 
-/* * Recomendación: Mejora la estructura con Fieldset
- * (Opcional, pero muy recomendado para diseño)
- */
 
-/* Envuelve tus grupos de inputs así:
-   <fieldset>
-       <legend>Datos Personales</legend>
-       <input ...>
-       <input ...>
-   </fieldset>
-   <fieldset>
-       <legend>Seguridad</legend>
-       <input type="password" ...>
-   </fieldset>
-*/
 
 .Formulario fieldset {
     border: 1px solid #ddd;
@@ -980,6 +1425,98 @@ body.modo-editar .Formulario h2 {
     color: #555;
 }
 
+/* --- ESTILOS PARA RESULTADOS API (Integrados al Tema) --- */
+
+.api-results-container {
+    background-color: #474747;     /* Mismo gris que tus tarjetas */
+    border: 1px solid #ddd;        /* Mismo borde claro */
+    border-radius: 15px;           /* Mismo redondeado */
+    margin-top: 30px;
+    padding: 0;                    /* El padding lo manejamos dentro */
+    overflow: hidden;              /* Para que el header no se salga del borde */
+}
+
+.api-header {
+    padding: 15px 20px;
+    border-bottom: 2px solid #6cd085; /* Tu verde característico */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(0,0,0, 0.1); /* Un poco más oscuro que el fondo */
+}
+
+.api-header h3 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.api-badge {
+    background-color: #6cd085;
+    color: #000;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    margin-left: auto;
+}
+
+.api-list {
+    max-height: 350px;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+/* Tarjeta individual de cada partido */
+.match-card {
+    background-color: #333; /* Fondo más oscuro para contraste (igual que inputs) */
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-left: 4px solid #6cd085; /* Acento verde a la izquierda */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: background-color 0.2s;
+}
+
+.match-card:hover {
+    background-color: #2a2a2a; /* Efecto hover sutil */
+}
+
+.match-teams {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #e0e0e0;
+    font-weight: 500;
+}
+
+.match-score {
+    background-color: #555; /* Fondo de botones */
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin: 0 10px;
+    color: #6cd085; /* Texto verde */
+    border: 1px solid #666;
+    white-space: nowrap;
+}
+
+.match-details {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: #aaa; /* Color de texto secundario del sitio */
+    margin-top: 5px;
+}
+
+.match-details i {
+    color: #6cd085;
+    margin-right: 5px;
+}
 
 /*----------------------------------------------*/
 

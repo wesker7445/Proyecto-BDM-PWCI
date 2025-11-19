@@ -9,12 +9,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['Name'];
     $password = $_POST['Password'];
 
-    // --- ¡CAMBIO AQUÍ! ---
-    // Pide también el ID_Usuario
-    $sql = "SELECT ID, Pass FROM usuarios WHERE Nombre_Usuario = ?";
+    // Consulta que selecciona ID, Contraseña (Pass) y Rol
+    $sql = "SELECT ID, Pass, Rol FROM usuarios WHERE Nombre_Usuario = ?";
     $stmt = $conexion->prepare($sql);
 
-    // ... (bind_param, execute, get_result) ...
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $resultado = $stmt->get_result();
@@ -25,13 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hash_guardado = $fila['Pass'];
 
         if (password_verify($password, $hash_guardado)) {
-            // Contraseña correcta
+
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
             
-            // --- ¡CAMBIO AQUÍ! ---
-            // Guarda el ID del usuario en la sesión
             $_SESSION['usuario_id'] = $fila['ID'];
+            
+            $_SESSION['rol'] = $fila['Rol'];
             
             header("Location: Pagina.php");
             exit;
@@ -58,27 +56,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="full-screen-layout">
     <header>
         <h1>Inicio de Sesión <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6cd085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-ball-football"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 7l4.76 3.45l-1.76 5.55h-6l-1.76 -5.55z" /><path d="M12 7v-4m3 13l2.5 3m-.74 -8.55l3.74 -1.45m-11.44 7.05l-2.56 2.95m.74 -8.55l-3.74 -1.45" /></svg></h1>
     </header>
     <div class= "layout">
-        <nav class="sidebar">
-            <ul>
-                <li><a href="Pagina.php">Pagina Principal</a></li>
-
-                <li> 
-                    <a href="#">Categorías</a>
-                    <ul>
-                        <li><a href="#">Faltas</a></li>
-                        <li><a href="#">Golres</a></li>
-                        <li><a href="#">Controversia</a></li>
-                        <li><a href="#">Jugadas</a></li>
-                    </ul>
-                </li>
-            </ul>
-
-        </nav>
         <main>
             <form action="InicioSesion.php" method="POST" class="Formulario">
                 <h2>Inicio de Sesión</h2>
