@@ -18,26 +18,30 @@
         $error = $_SESSION['error'];
         unset($_SESSION['error']);
     }
-
+    $id_mundial = 0; // Inicializamos la variable
     $mundiales = [];
     $categorias = [];
 
-   if (!isset($_GET['data'])) {
-    // Si no hay dato encriptado, devolvemos al inicio
-    header("Location: Pagina.php"); 
-    exit;
+   // CASO 1: Entras desde el menú principal (Dato Encriptado)
+    if (isset($_GET['data'])) {
+        $id_decodificado = base64_decode($_GET['data']);
+        if (is_numeric($id_decodificado)) {
+            $id_mundial = intval($id_decodificado);
+        }
+    } 
+    // CASO 2: Usas el buscador o filtros (Dato Numérico directo)
+    elseif (isset($_GET['id_mundial'])) {
+        if (is_numeric($_GET['id_mundial'])) {
+            $id_mundial = intval($_GET['id_mundial']);
+        }
     }
 
-    // Decodificamos el valor
-    $id_decodificado = base64_decode($_GET['data']);
-
-    // Verificamos que el resultado sea un número válido
-    if (!is_numeric($id_decodificado)) {
+    // VALIDACIÓN FINAL: Si después de los dos chequeos no tenemos ID válido, adiós.
+    if ($id_mundial === 0) {
         header("Location: Pagina.php"); 
         exit;
     }
 
-    $id_mundial = intval($id_decodificado);
 
     
 
@@ -249,7 +253,11 @@
                     <li><a href="/Pagina/Admin/AprobarP.php"> <i class="fa-solid fa-thumbs-up"></i> Aprobar Publicacion</a></li>
                     <li><a href="/Pagina/Admin/EliminarC.php"> <i class="fa-solid fa-trash"></i>Eliminar Comentario</a></li>
                     <li><a href="/Pagina/Admin/GestionarM.php"> <i class="fa-solid fa-list-check"></i> Gestionar Mundial</a></li>
+                    <li><a href="/Pagina/Admin/GestionarAdmin.php?tipo=categoria"><i class="fa-solid fa-tag"></i> Gestionar Categorías</a></li>
+                    <li><a href="/Pagina/Admin/GestionarAdmin.php?tipo=pais"><i class="fa-solid fa-flag"></i> Gestionar Países</a></li>
                     <li><a href="/Pagina/Admin/Mundial.php"> <i class="fa-solid fa-globe"></i> Crear Mundial</a></li>
+                    <li><a href="/Pagina/Admin/Categoria.php?tipo=categoria"><i class="fa-solid fa-tag"></i>Crear Categoría</a></li>
+                    <li><a href="/Pagina/Admin/Categoria.php?tipo=pais"><i class="fa-solid fa-flag"></i>Crear País</a></li>
                 </ul>
             </li> 
             <?php endif; ?>

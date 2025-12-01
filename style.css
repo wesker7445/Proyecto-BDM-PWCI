@@ -1518,6 +1518,120 @@ body.modo-editar .Formulario h2 {
     margin-right: 5px;
 }
 
+
+/* --- ESTILOS PARA LA TABLA DE GESTIÓN (GestionarAdmin.php) --- */
+
+.tabla-gestion-container { /* Nuevo contenedor para dar margen, si es necesario */
+    padding: 20px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    
+    /* Esto es clave para centrar el bloque del H2 horizontalmente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tabla-gestion td:last-child {
+    text-align: center;
+}
+.tabla-gestion-container h2 {
+    text-align: center;  /* <--- ESTA ES LA PROPIEDAD CLAVE */
+    color: #ffffff;
+    margin-bottom: 20px;
+    
+    /* Agrega esto si sientes que no se centra bien: */
+    width: 100%; /* Asegura que el H2 ocupe todo el ancho disponible para que el text-align funcione */
+}
+
+.tabla-gestion {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra consistente */
+    background-color: #333; /* Fondo oscuro (como tus tarjetas) */
+    color: #e0e0e0; /* Texto claro */
+    border-radius: 8px;
+    overflow: hidden; /* Asegura que el border-radius funcione */
+}
+
+.tabla-gestion th, .tabla-gestion td {
+    padding: 15px; /* Más padding para que se vea mejor */
+    border-bottom: 1px solid #555; /* Borde sutil oscuro */
+}
+
+.tabla-gestion td {
+    text-align: center;
+    justify-content: center;
+}
+
+.tabla-gestion th {
+    background-color: #6cd085; /* Cabecera con tu color de acento */
+    color: #000; /* Texto negro para contraste */
+    text-transform: uppercase;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;   
+}
+
+.tabla-gestion tr:nth-child(even) {
+    background-color: #3d3d3d; /* Rayas de cebra (gris más oscuro) */
+}
+
+.tabla-gestion tr:hover {
+    background-color: #474747; /* Resaltado al pasar el ratón */
+}
+
+/* Estilos para el botón de CREAR (Mismo que el formulario) */
+.btn-crear {
+    display: inline-flex; /* Usar flex para centrar el contenido si se necesita */
+    align-items: center;
+    gap: 5px;
+    padding: 10px 15px;
+    background-color: #6cd085; /* Tu verde */
+    color: #000;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-crear:hover {
+    background-color: #55a86e;
+}
+
+/* Estilos para los botones de ACCIÓN */
+.btn-accion {
+    padding: 8px 12px; /* Más grande que el anterior */
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em;
+    margin-right: 5px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-accion.editar {
+    background-color: #555555; /* Gris oscuro para edición */
+    color: #ffc107; /* Texto amarillo/naranja de acción */
+}
+
+.btn-accion.editar:hover {
+    background-color: #666;
+}
+.btn-accion.eliminar{
+  background-color: #555555; /* Gris oscuro para edición */
+    color: #b1202c; /* Texto amarillo/naranja de acción */
+}
+
+.btn-accion.eliminar:hover{
+  background-color: #666;
+}
+/* No es necesario definir .eliminar ya que está oculto para Países */
+
 /*----------------------------------------------*/
 
 /*Animaciones*/
