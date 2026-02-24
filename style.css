@@ -3,10 +3,10 @@
 }
 
 body {
-  background-color: rgb(44, 44, 44);
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  padding-top: 80px; 
+    background-color: rgb(44, 44, 44);
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    padding-top: 0; /* Cambiado de 80px a 0 */
 }
 
 /* --- NUEVA CLASE PARA PÁGINAS SIN BARRA LATERAL (EJEMPLO: Inicio de Sesión) --- */
@@ -48,17 +48,15 @@ a{
 
 
 header{
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background-color: #333;
+  z-index: 100;
+  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background-color: #575757;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  position: fixed;  /* <--- ¡CAMBIO CLAVE! */
-  top: 0;
-  left: 0;          /* Asegura que empieza a la izquierda */
-  width: 100%;      /* Asegura que ocupe todo el ancho */
-  z-index: 1001;
 
 }
 
@@ -188,92 +186,75 @@ nav ul li.container{
 
 /* --- BARRA VERTICAL --- */
 .layout {
-  display: flex;
+    display: flex;
+    height: 100vh;
+    overflow: hidden; /* Evita scroll en el contenedor padre */
 }
 
 /* La barra lateral */
 .sidebar {
-    width: 220px;
-    background-color: rgb(65, 65, 65);
+    width: 250px;
+    background-color: #1a1a1a; /* Un gris más oscuro para que resalte */
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding-top: 10px;
-    
-    /* --- ¡CAMBIOS CLAVE! --- */
-    position: fixed;   /* <--- CAMBIO a fixed */
-    left: 0;
-    top: 80px;         /* Empieza justo donde termina el header (80px) */
-    height: calc(100vh - 80px); /* Ocupa el resto de la altura */
-    z-index: 1000;
+    padding: 20px 0;
+    border-right: 1px solid #333;
+    flex-shrink: 0; /* Evita que la barra se encoja */
+    font-family: 'Roboto', sans-serif;
 }
 
 .sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  width: 100%;
-
-  height: 100%; /* Permite al ul ocupar toda la altura del sidebar (100vh - 80px) */
-  display: flex; /* Convierte el ul en un contenedor flex */
-  flex-direction: column; /* Coloca los elementos li en columna */
-  padding-bottom: 20px;
+  flex-grow: 1;
 }
 
-.sidebar li.push-bottom {
-    /* Esta propiedad empuja el elemento al final del contenedor flex */
-    margin-top: auto; 
-}
-
-.sidebar ul li ul{ /* Oculta las sublistas por defecto en el sidebar */
-  display: none;
-  position: relative;
-  background-color: #3d3d3d; 
-  min-width: 100%; 
-  padding-left: 0; 
-}
-
-.sidebar ul li:hover ul{ /* Muestra las sublistas al hacer hover en el padre */
-  display: block;
-}
-
-.sidebar li {
-  width: 100%;
-}
-
-.sidebar a {
-  display: flex; /* CAMBIO CLAVE: Permite usar flexbox */
-  align-items: center; /* Centra el ícono y el texto verticalmente */
-  gap: 10px; /* AÑADIDO: Espacio de 10px entre el ícono y el texto */
-  padding: 15px 20px;
-  color: #fff;
-  font-weight: bold;
+.sidebar li a {
+  color: #ccc;
   text-decoration: none;
-  transition: background-color 0.3s;
+  padding: 15px 25px;
+  display: block;
+  transition: 0.3s;
+  font-size: 16px;
 }
 
-.sidebar a:hover {
-  background-color: #6cd085;
-  color: #000;
+.sidebar li a:hover, 
+.sidebar li a.active-link {
+    background-color: #333;
+    color: #fff;
 }
 
-.sidebar li.container {
-    padding: 10px 20px; /* Usa el mismo padding que los enlaces para consistencia */
-    width: 100%; /* Asegura que tome todo el ancho */
-    box-sizing: border-box; /* Incluye el padding en el cálculo del ancho */
+.sidebar i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
 }
 
+/* Títulos de sección (como "HERRAMIENTAS") */
+.sidebar-section-title {
+    padding: 25px 25px 10px 25px;
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    list-style: none; /* Quita el punto de lista si existe */
+}
+
+.content-wrapper {
+    flex-grow: 1;
+    height: 100vh;
+    overflow-y: auto; /* El scroll ahora ocurre aquí */
+    display: flex;
+    flex-direction: column;
+}
 
 main {
-  width: calc(100% - 220px);
-  margin-left: 220px;
-  padding: 0 20px 20px 20px;         
-  display: flex;        
-  justify-content: center; 
-  flex-direction: column;  
-  align-items: center;
-  
-  min-height: calc(100vh - 80px - 58px);
+    width: 100%; /* Ahora ocupa el 100% de su contenedor (content-wrapper) */
+    margin-left: 0; /* Ya no necesita margen porque ya no hay nada "flotando" debajo */
+    padding: 20px;
 
 }
 
@@ -301,13 +282,11 @@ main .publicaciones-feed h4 {
 }
 
 .publicacion{
-  background-color: #333;
-  max-width: 1000px;
-  margin: 40px auto;
-  border-radius: 15px;
-  padding: 40px 50px;
-  color: #e0e0e0;
-  line-height: 1.7;
+  background-color: transparent; /* Quita el gris de fondo si prefieres el look oscuro total */
+    max-width: 800px; /* Un ancho más cómodo para leer */
+    margin: 20px auto;
+    padding: 0;
+    border-radius: 0;
   
 }
 
@@ -680,12 +659,10 @@ main p {
 
 footer{
     margin: 0;
-    padding: 1px;
-    overflow: hidden;
+    padding: 20px;
     background-color: rgb(34, 34, 34);
-    align-items: center;
-    width: calc(100% - 220px);
-    margin-left: 220px;
+    width: 100%; /* Ahora se ajusta al ancho de su padre (content-wrapper) */
+    text-align: center;
   }
 
   .Resaltado{
@@ -1042,12 +1019,11 @@ input[type="file"]::file-selector-button {
 
 /* Estilos para el contenedor de la imagen */
 .post-image-container img {
-    width: 75%;
+  max-width: 100%; /* No permite que la imagen sea más ancha que el feed */
     height: auto;
+    border-radius: 8px;
     display: block;
-    border-radius: 8px; /* Opcional: para redondear las esquinas */
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
   /* O simplemente: */
 }
 

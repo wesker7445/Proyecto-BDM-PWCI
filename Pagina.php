@@ -63,48 +63,38 @@ if ($resultado) {
     </style>
 </head>
 <body>
-<header>
-    <h1>Feed <i class="fa-solid fa-futbol"></i></h1>
-    <?php if ($isLoggedIn): ?>
-    <div class="user">
-        <img src="MostrarImagen.php" alt="Foto de perfil" height="50" width="50">
-        <h3><?php echo htmlspecialchars($username_session); ?></h3>
-    </div>
-    <?php endif; ?>
-</header>
 <div class= "layout">
     <nav class="sidebar">
         <ul>
             <?php if ($isLoggedIn): ?>
-            <li>
-                <a href="logout.php"> <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
-            </li>
+                <li><a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a></li>
             <?php else: ?>
-            <li>
-                <a href="InicioSesion.php">Iniciar Sesión</a>
-            </li>
+                <li><a href="InicioSesion.php"><i class="fa-solid fa-user"></i> Iniciar Sesión</a></li>
             <?php endif; ?>
 
-            <!-- Bloque con desplegable de admin -->
             <?php if ($userRole == 1): ?>
-            <li class="admin-dropdown"> <a href="#" class="dropdown-toggle" id="adminToggle"> <i class="fa-solid fa-user-tie"></i> Modo Admin </a>
-                <ul>
-                    <li><a href="/Pagina/Admin/AprobarP.php"> <i class="fa-solid fa-thumbs-up"></i> Aprobar Publicacion</a></li>
-                    <li><a href="/Pagina/Admin/EliminarC.php"> <i class="fa-solid fa-trash"></i>Eliminar Comentario</a></li>
-                    <li><a href="/Pagina/Admin/GestionarM.php"> <i class="fa-solid fa-list-check"></i> Gestionar Mundial</a></li>
-                    <li><a href="/Pagina/Admin/GestionarAdmin.php?tipo=categoria"><i class="fa-solid fa-tag"></i> Gestionar Categorías</a></li>
-                    <li><a href="/Pagina/Admin/GestionarAdmin.php?tipo=pais"><i class="fa-solid fa-flag"></i> Gestionar Países</a></li>
-                    <li><a href="/Pagina/Admin/Mundial.php"> <i class="fa-solid fa-globe"></i> Crear Mundial</a></li>
-                    <li><a href="/Pagina/Admin/Categoria.php?tipo=categoria"><i class="fa-solid fa-tag"></i>Crear Categoría</a></li>
-                    <li><a href="/Pagina/Admin/Categoria.php?tipo=pais"><i class="fa-solid fa-flag"></i>Crear País</a></li>
-                </ul>
-            </li> 
-            <?php endif; ?>
-            <li class="push-bottom"> 
-                <a href="MisPosts.php"><i class="fas fa-cog"></i> Perfil</a>
-            </li>
+                <li class="sidebar-section-title">Administración</li>
+                <li><a href="/Pagina/Admin/AprobarP.php"><i class="fa-solid fa-thumbs-up"></i> Aprobar Publicación</a></li>
+                <li><a href="/Pagina/Admin/EliminarC.php"><i class="fa-solid fa-trash"></i> Eliminar Comentario</a></li>
+                <li><a href="/Pagina/Admin/GestionarM.php"><i class="fa-solid fa-list-check"></i> Gestionar Mundial</a></li>
+                <?php endif; ?>
+
+            <li class="sidebar-section-title">Herramientas</li>
+            <li><a href="scanner.php"><i class="fa-solid fa-expand"></i> Modo escaneo</a></li>
+            <li><a href="MisPosts.php"><i class="fas fa-cog"></i> Perfil</a></li>
         </ul>
     </nav>
+
+    <div class="content-wrapper">
+        <header>
+            <h1>Feed <i class="fa-solid fa-futbol"></i></h1>
+            <?php if ($isLoggedIn): ?>
+            <div class="user">
+                <img src="MostrarImagen.php" alt="Foto de perfil" height="50" width="50">
+                <h3><?php echo htmlspecialchars($username_session); ?></h3>
+            </div>
+            <?php endif; ?>
+        </header>
 
        <main> 
         <div class="publicacion">
@@ -174,6 +164,7 @@ if ($resultado) {
             </div>
         </main>
 </div> 
+    </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php if (isset($error)) : ?>
 <script>
@@ -185,9 +176,9 @@ Swal.fire({
 });
 </script>
 <?php endif; ?>
-
 <footer>
     <p class="Resaltado">© 2025 Mi Pagina de Mundiales | MiPaginadeMundiales@gmail.com | 815678921 <p>
 </footer>
+
 </body>
 </html>
